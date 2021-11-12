@@ -14,11 +14,11 @@ export const NavRoute = () => {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path={"/"} element={<Home/>} exact/>
                 <Route path={"/about-us"} element={<AboutUs/>} exact/>
                 <Route path={"/advisement"} element={<Advisement/>} exact/>
                 <Route path={"/buy-estate"} element={<BuyEstate/>} exact/>
                 <Route path={"/contact"} element={<Contact/>} exact/>
-                <Route path={"/home"} element={<Home/>} exact/>
                 <Route path={"/inside-design"} element={<InsideDesign/>} exact/>
                 <Route path={"/rent-estate"} element={<RentEstate/>} exact/>
                 <Route path={"/search"} element={<Search/>} exact/>
