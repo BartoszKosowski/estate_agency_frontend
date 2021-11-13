@@ -1,14 +1,15 @@
 import React from "react";
 import {DescribeServices} from "../Components/DescribeServices";
+import "../Styles/home.css"
+import {AboutUsShort} from "../Components/AboutUsShort"
 
 
 export class Home extends React.Component {
     render() {
         return (
-            //TODO naprawić ten obrazek aby dobrze się wyświetlał pronto 
             <div className={"text-lg container bg-gray-400 mx-auto"}>
-                <div className={"relative"}>
-                    <img className={"object-contain w-full"} src={"img/pexels-max-vakhtbovych-7545789.jpg"} alt={"Room"}/>
+                <img className={"w-full"} src={"img/pexels-max-vakhtbovych-7545789.jpg"} alt={"Room"}/>
+                <div className={"verticalCenter"}>
                     <div className={"w-3/4 flex ml-52 align-middle"}>
                         <input type={"text"} id={"searchBox"}
                                placeholder={"Podaj słowa kluczowe np. mieszkanie z balkonem w centrum Katowic"}
@@ -25,12 +26,25 @@ export class Home extends React.Component {
                 <div className={"bg-purple-700 container w-1/2 justify-center mt-5 mx-1 mx-auto h-52"}>
                     <div>
                         <div>
-                            {/*TODO add url to contact page*/}
+                            {/*TODO add url to contact page and fix img to be responsive*/}
                             <img src={"img/pexels-fauxels-3184416.jpg"} alt={"Contact us!"}/>
                         </div>
                     </div>
                 </div>
-                <div className={"h-60"}/>
+                <AboutUsShort/>
+                <div className={"mt-5"}>
+                    <div className={"w-1/2 m-auto text-left font-semibold text-4xl text-white "}>
+                        <div className={"border-b-2 border-white"}>
+                            Sprawdź nasze najnowsze oferty
+                        </div>
+                    </div>
+                    <div className={"flex flex-wrap content-center "}>
+                        <button className={"w-1/2 my-5 mx-auto uppercase text-3xl text-white h-40 text-center bg-purple-700 hover:bg-purple-500"}>
+                            Przejdź do ofert
+                        </button>
+                    </div>
+
+                </div>
             </div>
         )
     }

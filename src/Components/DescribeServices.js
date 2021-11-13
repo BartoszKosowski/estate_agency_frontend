@@ -5,7 +5,7 @@ import {white} from "tailwindcss/colors";
 export const DescribeServices = () => {
     return(
         <div className={"w-full"}>
-            <div className={"w-1/2 m-auto text-center font-semibold text-3xl text-white border-b-2 border-white"}>
+            <div className={"w-1/2 m-auto text-left font-semibold text-4xl text-white border-b-2 border-white"}>
                 <div className={"mb-3"}>
                     Zapewniamy następujące usługi:
                 </div>

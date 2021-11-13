@@ -14,7 +14,7 @@ export default function Navigation() {
 
     return (
             <div className="flex flex-wrap">
-                <div className="w-full">
+                <div className="w-full fixed">
                     <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-700">
                         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
                             <div
