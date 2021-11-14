@@ -1,22 +1,22 @@
 import React from "react";
 
 
-export class InsideDesign extends React.Component{
+export class SellEstate extends React.Component{
     render() {
         return(
             <div className={"bg-gray-400 container mx-auto"}>
                 <div className={"w-full"}>
-                    <img className={"w-full h=1/3"} src={"img/pexels-thirdman-5582597.jpg"}
-                         alt={"architectonic project"}/>
+                    <img className={"w-full h=1/3"} src={"img/pexels-pixabay-210617.jpg"}
+                         alt={"house to sell"}/>
 
                     <div className={"mt-20 h-60 w-full text-white text-xl  bg-gray-500"}>
-                        <span className={"text-3xl font-semibold uppercase mb-5"}>
-                            nie masz pomysłu jak się urządzić?
+                        <span className={"text-3xl font-semibold uppercase"}>
+                            chcesz sprzedać lub wynająć swoją nieruchomość?
                         </span>
                         <br/>
                         {/*TODO fix description*/}
-                        Nasi projektanci od lat specjalizują się w tworzeniu uniklanych wnętrz, nadadzą twojemu mieszkaniu niesamowity, dostosowany
-                        do Ciebie styl. Lubisz klasycyzm lub późne rokoko? A może preferujesz nowoczesne wnętrza? Projekty naszych doradzców na pewno sprostają twoim wymaganią!
+                        Korzystając z naszych usług, agenci zajmą się wszystkim za Ciebie! Wystarczy tylko, że spotkasz się z jednym z nas aby
+                        ustalić warunki tranzakcji.
 
                     </div>
 

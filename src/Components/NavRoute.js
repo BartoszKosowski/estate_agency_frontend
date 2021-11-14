@@ -5,7 +5,7 @@ import {BuyEstate} from "../Pages/BuyEstate";
 import {Contact} from "../Pages/Contact";
 import {Home} from "../Pages/Home";
 import {InsideDesign} from "../Pages/InsideDesign";
-import {RentEstate} from "../Pages/RentEstate";
+import {SellEstate} from "../Pages/SellEstate";
 import {Search} from "../Pages/Search";
 
 
@@ -20,8 +20,8 @@ export const NavRoute = () => {
                 <Route path={"/buy-estate"} element={<BuyEstate/>} exact/>
                 <Route path={"/contact"} element={<Contact/>} exact/>
                 <Route path={"/inside-design"} element={<InsideDesign/>} exact/>
-                <Route path={"/rent-estate"} element={<RentEstate/>} exact/>
                 <Route path={"/search"} element={<Search/>} exact/>
+                <Route path={"/sell-estate"} element={<SellEstate/>} exact/>
             </Routes>
         </BrowserRouter>
     )

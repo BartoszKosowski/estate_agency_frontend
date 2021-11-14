@@ -8,7 +8,7 @@ export default function Navigation() {
         {value: "Katowice", key: "Katowice"},
         {value: "Tychy",key: "Tychy"}];
     const services = [{value: "Zakup nieruchomości", key: "buy-estate"},
-        {value: "Najem nieruchomości", key: "rent-estate"},
+        {value: "Sprzedaż nieruchomości", key: "sell-estate"},
         {value: "Doradztwo", key: "advisement"},
         {value: "Projektowanie wnętrz", key: "inside-design"}]
 
