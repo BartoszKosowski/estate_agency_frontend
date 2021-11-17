@@ -2,18 +2,6 @@ import {BsFillTelephoneFill, FaFacebook, FaInstagram, FaSearchLocation, HiOutlin
 
 export const Footer = () => {
 
-    const goFacebook = () => {
-        return (
-            window.open("https://www.facebook.com", "_blank").focus()
-        )
-    }
-
-    const goInstagram = () => {
-        return (
-            window.open("https://www.instagram.com", "_blank").focus()
-        )
-    }
-
     return (
         <footer className="footer bg-gray-700 relative pt-1 border-b-2 text-white">
             <div className="container mx-auto px-6">
@@ -22,8 +10,8 @@ export const Footer = () => {
                     <div className="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
                         <div className="flex flex-col">
                             <span className="font-bold text-white uppercase mt-4 md:mt-0 mb-2"><a href={"/"}>some estates</a></span>
-                            <span className="my-2"><a href="/about-us" className="text-white text-md hover:opacity-75">O nas</a></span>
-                            <span className="my-2"><a href="/contact"
+                            <span className="my-2"><a href={"/about-us"} className="text-white text-md hover:opacity-75">O nas</a></span>
+                            <span className="my-2"><a href={"/contact"}
                                                       className="text-white  text-md hover:opacity-75">Kontakt</a></span>
                         </div>
                         <div className="flex flex-col">
@@ -40,14 +28,14 @@ export const Footer = () => {
                             <div className={"w-3/4 m-auto"}>
                                 <div className={"grid grid-cols-2"}>
                                     <div className={"m-auto"}>
-                                        <button onClick={goFacebook}>
+                                        <a href={"https://www.facebook.com"} target={"_blank"} rel={"noreferrer"}>
                                             <FaFacebook size={30}/>
-                                        </button>
+                                        </a>
                                     </div>
                                     <div className={"m-auto"}>
-                                        <button onClick={goInstagram}>
+                                        <a href={"https://www.instagram.com"} target={"_blank"} rel={"noreferrer"}>
                                             <FaInstagram size={30}/>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
 

@@ -13,7 +13,7 @@ export default function Navigation() {
         {value: "Projektowanie wnętrz", key: "inside-design"}]
 
     return (
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap h-16 -mb-1">
                 <div className="w-full fixed">
                     <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-700">
                         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
@@ -40,7 +40,7 @@ export default function Navigation() {
                                     <li className="nav-item">
                                         <a
                                             className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                            href="/"
+                                            href={"/"}
                                         >
                                             Strona główna
                                         </a>
@@ -48,7 +48,7 @@ export default function Navigation() {
                                     <li className="nav-item">
                                         <a
                                             className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                            href="/search"
+                                            href={"/search"}
                                         >
                                             Wyszukaj
                                         </a>
@@ -62,7 +62,7 @@ export default function Navigation() {
                                     <li className="nav-item">
                                         <a
                                             className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                            href="/about-us"
+                                            href={"/about-us"}
                                         >
                                             O nas
                                         </a>
@@ -70,7 +70,7 @@ export default function Navigation() {
                                     <li className="nav-item">
                                         <a
                                             className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                                            href="/contact"
+                                            href={"/contact"}
                                         >
                                             Kontakt
                                         </a>
