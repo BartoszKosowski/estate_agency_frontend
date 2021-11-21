@@ -11,8 +11,8 @@ export const Footer = () => {
                         <div className="flex flex-col">
                             <span className="font-bold text-white uppercase mt-4 md:mt-0 mb-2"><a href={"/"}>some estates</a></span>
                             <span className="my-2"><a href={"/about-us"} className="text-white text-md hover:opacity-75">O nas</a></span>
-                            <span className="my-2"><a href={"/contact"}
-                                                      className="text-white  text-md hover:opacity-75">Kontakt</a></span>
+                            <span className="my-2"><a href={"/contact"} className="text-white  text-md hover:opacity-75">Kontakt</a></span>
+                            <span className="my-2"><a href={"/contact-us"} className="text-white  text-md hover:opacity-75">Napisz do nas</a></span>
                         </div>
                         <div className="flex flex-col">
                             <span className="font-bold text-white uppercase mb-2">Skontaktuj się z nami:</span>

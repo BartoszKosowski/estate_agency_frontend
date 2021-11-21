@@ -1,0 +1,27 @@
+{
+  "env": {
+    "dev": {
+      "realEstateAgencyAPI": {
+        "hostName": "localhost",
+        "port": "5001"
+      },
+      "iisExpress": {
+        "hostname": "localhost",
+        "port": "44393"
+      }
+    }
+  },
+  "api": {
+    "addresses": "api/Addresses",
+    "agents": "api/Agents",
+    "estates": "api/Estates",
+    "meetings": "api/Meetings",
+    "offers": "api/Offers",
+    "photos": "api/Photos",
+    "requests": "api/Requests",
+    "statuses": "api/Status",
+    "tradeInfos": "api/TradeInfoes"
+  }
+}
+
+
