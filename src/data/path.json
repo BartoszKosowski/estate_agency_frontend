@@ -17,10 +17,17 @@
     "estates": "api/Estates",
     "meetings": "api/Meetings",
     "offers": "api/Offers",
+    "offerPreview": "api/OfferPreview",
     "photos": "api/Photos",
     "requests": "api/Requests",
     "statuses": "api/Status",
-    "tradeInfos": "api/TradeInfoes"
+    "tradeInfos": {
+      "all": "api/TradeInfoes",
+      "market": "api/TradeInfoes/market",
+      "propertyType": "api/TradeInfoes/propertyType",
+      "services": "api/TradeInfoes/services",
+      "tradeArea": "api/TradeInfoes/tradeArea"
+    }
   }
 }
 

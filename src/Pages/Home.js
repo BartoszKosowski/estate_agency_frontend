@@ -8,7 +8,8 @@ export class Home extends React.Component {
     render() {
         return (
             <div className={"text-lg container bg-gray-400 mx-auto"}>
-                <img className={"w-full"} src={"img/pexels-max-vakhtbovych-7545789.jpg"} alt={"Room"}/>
+                <img className={"w-full h-auto object-contain"} src={"img/pexels-max-vakhtbovych-7546766.jpg"}
+                     alt={"Room"}/>
                 <div className={"verticalCenter"}>
                     <div className={"w-3/4 flex ml-52 align-middle"}>
                         <input type={"text"} id={"searchBox"}
@@ -23,14 +24,22 @@ export class Home extends React.Component {
                 <div className={"mt-5"}>
                     <DescribeServices/>
                 </div>
-                <div className={"bg-purple-700 container w-1/2 justify-center mt-5 mx-1 mx-auto h-52"}>
-                    <div>
-                        <div>
-                            {/*TODO add url to contact page and fix img to be responsive*/}
-                            <img src={"img/pexels-fauxels-3184416.jpg"} alt={"Contact us!"}/>
+                <div className={"w-1/2 mx-auto"}>
+                    <a href={"/contact-us"}>
+                        <div
+                            className={"bg-purple-700 md:container grid grid-cols-2 w-1/4 justify-center mt-5 mx-1 mx-auto h-auto"}>
+                            <div className={"h-auto"}>
+                                <img className={"object-contain"} src={"img/pexels-fauxels-3184416.jpg"}
+                                     alt={"Contact us!"}/>
+                            </div>
+                            <div className={"uppercase font-semibold grid place-items-center text-white text-3xl"}>
+                                Skontaktuj się z nami
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
+
+
                 <AboutUsShort/>
                 <div className={"mt-5"}>
                     <div className={"w-1/2 m-auto text-left font-semibold text-4xl text-white "}>
@@ -38,12 +47,14 @@ export class Home extends React.Component {
                             Sprawdź nasze najnowsze oferty
                         </div>
                     </div>
-                    <div className={"flex flex-wrap content-center "}>
-                        <button className={"w-1/2 my-5 mx-auto uppercase text-3xl text-white h-40 text-center bg-purple-700 hover:bg-purple-500"}>
-                            Przejdź do ofert
-                        </button>
-                    </div>
-
+                    <a href={"/search"}>
+                        <div className={"flex flex-wrap content-center "}>
+                            <button
+                                className={"w-1/2 my-5 mx-auto uppercase text-3xl text-white h-40 text-center bg-purple-700 hover:bg-purple-500"}>
+                                Przejdź do ofert
+                            </button>
+                        </div>
+                    </a>
                 </div>
             </div>
         )

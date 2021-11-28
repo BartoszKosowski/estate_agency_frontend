@@ -57,17 +57,17 @@ export class ContactUs extends React.Component {
 
     render() {
         return(
-            <div className={"container bg-gray-400 mx-auto grid grid-cols-2 h-screen"}>
+            <div className={"md:container bg-gray-400 md:mx-auto grid grid-cols-2 h-screen"}>
                 <div className={"bg-pink-400"}>
                     {/*{TODO add some photo and text}*/}
                 </div>
                 <div>
-                   <form className={"w-full"}>
-                       <div className="flex flex-wrap mt-6 -mx-3 mb-6">
-                           <div className="w-10/12 mx-auto md:w-5/12 px-3 mb-6 md:mb-0">
-                               {this.formatLabel("Imię")}
-                               {this.correctFillInput("nameInput", "Jan")}
-                           </div>
+                    <form className={"w-full"}>
+                        <div className="flex flex-wrap mt-6 -mx-3 mb-6">
+                            <div className="w-10/12 mx-auto md:w-5/12 px-3 mb-6 md:mb-0">
+                                {this.formatLabel("Imię")}
+                                {this.correctFillInput("nameInput", "Jan")}
+                            </div>
                            <div className="w-10/12 mx-auto md:w-5/12 px-3">
                                {this.formatLabel("Nazwisko")}
                                {this.correctFillInput("lastNameInput", "Kowalski")}

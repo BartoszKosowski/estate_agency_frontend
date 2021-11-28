@@ -4,6 +4,12 @@ import {FiChevronDown} from "react-icons/all";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import {OfferCard} from "../Components/OfferCard";
+import axios from "axios";
+import data from "../data/path.json";
+
+const api = axios.create({
+    baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
+})
 
 export class Search extends React.Component {
 
@@ -11,10 +17,32 @@ export class Search extends React.Component {
         colors: [
             {value: "red", label: "Red"},
             {value: "blue", label: "Blue"}
-        ]
+        ],
+        offerType: [
+            {value: "sprzedaz", label: "sprzedaż"},
+            {value: "wynajem", label: "wynajem"}
+        ],
+        propertyType: [],
+        city: [],
+        market: [],
+        location: [],
+        facilities: []
     }
 
     animatedComponents = makeAnimated();
+
+
+    componentDidMount() {
+        api.get(data.api.tradeInfos.propertyType.toString()).then(res => {
+            this.setState({propertyType: res.data})
+        })
+        api.get(data.api.tradeInfos.market.toString()).then(res => {
+            this.setState({market: res.data})
+        })
+        api.get(data.api.offerPreview.toString()).then(res => {
+            this.setState({city: res.data})
+        })
+    }
 
     customInput(id, name) {
         return (
@@ -24,7 +52,7 @@ export class Search extends React.Component {
         )
     }
 
-    squareMeter(){
+    squareMeter() {
         return (
             <span>m<sup>2</sup></span>
         )
@@ -42,7 +70,7 @@ export class Search extends React.Component {
 
     render() {
         return (
-            <div className={"bg-gray-400 container mx-auto h-screen"}>
+            <div className={"bg-gray-400 md:container md:mx-auto h-screen"}>
                 <div className={"h-28 bg-pink-400 w-full flex"}>
                     <img src={"img/pexels-burst-373893.jpg"} className={"w-full h-full"} alt={"city at night"}/>
                 </div>
