@@ -8,7 +8,8 @@ import {Home} from "../Pages/Home";
 import {InsideDesign} from "../Pages/InsideDesign";
 import {SellEstate} from "../Pages/SellEstate";
 import {Search} from "../Pages/Search";
-
+import {HouseOffer} from "../Pages/HouseOffer";
+import {ApartmentOffer} from "../Pages/ApartmentOffer";
 
 
 export const NavRoute = () => {
@@ -18,10 +19,12 @@ export const NavRoute = () => {
                 <Route path={"/"} element={<Home/>} exact/>
                 <Route path={"/about-us"} element={<AboutUs/>} exact/>
                 <Route path={"/advisement"} element={<Advisement/>} exact/>
+                <Route path={"/apartment-offer"} element={<ApartmentOffer/>} exact/>
                 <Route path={"/buy-estate"} element={<BuyEstate/>} exact/>
                 <Route path={"/contact"} element={<Contact/>} exact/>
                 <Route path={"/contact-us"} element={<ContactUs/>} exact/>
                 <Route path={"/inside-design"} element={<InsideDesign/>} exact/>
+                <Route path={"/house-offer"} element={<HouseOffer/>} exact/>
                 <Route path={"/search"} element={<Search/>} exact/>
                 <Route path={"/sell-estate"} element={<SellEstate/>} exact/>
             </Routes>
