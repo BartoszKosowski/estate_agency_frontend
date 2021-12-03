@@ -23,6 +23,7 @@ import {
 } from "react-icons/all";
 import description from "../data/description.json";
 import {OfferAgent} from "../Components/OfferAgent";
+import {PhotoGallery} from "../Components/PhotoGallery";
 
 
 export class ApartmentOffer extends React.Component {
@@ -39,7 +40,7 @@ export class ApartmentOffer extends React.Component {
             <div className={"md:container mx-auto bg-gray-400"}>
 
                 <div className={"flex grid grid-cols-2 text-white border-b-2 border-white"}>
-                    <div></div>
+                    <div>{<PhotoGallery/>}</div>
                     <div>{<OfferAgent agentNumber={1}/>}</div>
                 </div>
 

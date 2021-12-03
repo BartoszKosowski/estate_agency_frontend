@@ -3,9 +3,10 @@ import {Menu, Transition} from "@headlessui/react";
 import {FiChevronDown} from "react-icons/all";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import {OfferCard} from "../Components/OfferCard";
+import {HouseOfferCard} from "../Components/HouseOfferCard";
 import axios from "axios";
 import data from "../data/path.json";
+import {ApartmentOfferCard} from "../Components/ApartmentOfferCard";
 
 const api = axios.create({
     baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
@@ -39,7 +40,7 @@ export class Search extends React.Component {
         api.get(data.api.tradeInfos.market.toString()).then(res => {
             this.setState({market: res.data})
         })
-        api.get(data.api.offerPreview.toString()).then(res => {
+        api.get(data.api.estateOfferPreviews.toString()).then(res => {
             this.setState({city: res.data})
         })
     }
@@ -70,7 +71,7 @@ export class Search extends React.Component {
 
     render() {
         return (
-            <div className={"bg-gray-400 md:container md:mx-auto h-screen"}>
+            <div className={"bg-gray-400 md:container md:mx-auto"}>
                 <div className={"h-28 bg-pink-400 w-full flex"}>
                     <img src={"img/pexels-burst-373893.jpg"} className={"w-full h-full"} alt={"city at night"}/>
                 </div>
@@ -201,12 +202,17 @@ export class Search extends React.Component {
                     </div>
                 </div>
                 <div className={"w-1/3 h-20 mx-auto items-end"}>
-                    <button className={"w-full h-full my-5 mx-auto uppercase text-2xl rounded text-white text-center bg-purple-700 hover:bg-purple-500"} id={"searchButton"} placeholder={"Szukaj"}>
+                    <button
+                        className={"w-full h-full my-5 mx-auto uppercase text-2xl rounded text-white text-center bg-purple-700 hover:bg-purple-500"}
+                        id={"searchButton"} placeholder={"Szukaj"}>
                         Szukaj
                     </button>
                 </div>
-                <div className={"mt-10 mx-auto w-3/4 mt-20"}>
-                    {OfferCard("text")}
+                <div className={"mx-10 mx-auto w-3/4 mt-20"}>
+                    {<HouseOfferCard/>}
+                </div>
+                <div className={"mx-10 mx-auto w-3/4 mt-20\""}>
+                    {<ApartmentOfferCard/>}
                 </div>
             </div>
         )

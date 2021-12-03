@@ -23,25 +23,11 @@ import {
     SiBookmeter
 } from "react-icons/all";
 import {OfferAgent} from "../Components/OfferAgent";
+import "react-responsive-carousel/lib/styles/carousel.min.css"
+import {PhotoGallery} from "../Components/PhotoGallery";
 
 export class HouseOffer extends React.Component {
 
-    state = {
-        images: [
-            {
-                original: "img/pexels-binyamin-mellish-186077-full.jpg",
-                thumbnail: "img/pexels-binyamin-mellish-186077-.jpg"
-            },
-            {
-                original: "img/pexels-max-vakhtbovych-7587376-full.jpg",
-                thumbnail: "img/pexels-max-vakhtbovych-7587376.jpg"
-            },
-            {
-                original: "img/pexels-max-vakhtbovych-7587380.jpg-full",
-                thumbnail: "img/pexels-max-vakhtbovych-7587380.jpg"
-            },
-        ]
-    }
 
     squareMeters = () => {
         return (
@@ -54,7 +40,7 @@ export class HouseOffer extends React.Component {
 
             <div className={"md:container mx-auto bg-gray-400"}>
                 <div className={"flex grid grid-cols-2 text-white border-b-2 border-white"}>
-                    <div></div>
+                    <div>{<PhotoGallery/>}</div>
                     <div>{<OfferAgent agentNumber={1}/>}</div>
                 </div>
                 <div className={"flex grid grid-cols-5 gap-4 text-white border-b-2 border-white"}>

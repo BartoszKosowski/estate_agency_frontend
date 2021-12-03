@@ -14,10 +14,11 @@
   "api": {
     "addresses": "api/Addresses",
     "agents": "api/Agents",
+    "apartmentOfferPreviews": "api/ApartmentOfferPreviews",
     "estates": "api/Estates",
+    "estateOfferPreviews": "api/EstateOfferPreviews",
     "meetings": "api/Meetings",
     "offers": "api/Offers",
-    "offerPreview": "api/OfferPreview",
     "photos": "api/Photos",
     "requests": "api/Requests",
     "statuses": "api/Status",
