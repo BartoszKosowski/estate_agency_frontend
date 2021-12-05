@@ -8,10 +8,10 @@ export class PhotoGallery extends React.Component {
             <div className={"carousel-wrapper"}>
                 <Carousel showArrows={true} infiniteLoop useKeyboardArrows autoPlay>
                     <div>
-                        <img src={"img/pexels-binyamin-mellish-186077-.jpg"}/>
+                        <img src={"img/pexels-binyamin-mellish-186077-.jpg"} alt={"zdjęcie"}/>
                     </div>
                     <div>
-                        <img src={"img/pexels-max-vakhtbovych-7587376.jpg"}/>
+                        <img src={"img/pexels-max-vakhtbovych-7587376.jpg"} alt={"zdjęcie"}/>
                     </div>
                 </Carousel>
             </div>

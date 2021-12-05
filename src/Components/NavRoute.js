@@ -19,12 +19,12 @@ export const NavRoute = () => {
                 <Route path={"/"} element={<Home/>} exact/>
                 <Route path={"/about-us"} element={<AboutUs/>} exact/>
                 <Route path={"/advisement"} element={<Advisement/>} exact/>
-                <Route path={"/apartment-offer/:id_offer"} element={<ApartmentOffer/>}/>
+                <Route path={"/apartmentOffer"} exact element={<ApartmentOffer/>}/>
                 <Route path={"/buy-estate"} element={<BuyEstate/>} exact/>
                 <Route path={"/contact"} element={<Contact/>} exact/>
                 <Route path={"/contact-us"} element={<ContactUs/>} exact/>
                 <Route path={"/inside-design"} element={<InsideDesign/>} exact/>
-                <Route path={"/house-offer/:id_offer"} element={<HouseOffer/>}/>
+                <Route path={"/houseOffer"} exact element={<HouseOffer/>}/>
                 <Route path={"/search"} element={<Search/>}/>
                 <Route path={"/sell-estate"} element={<SellEstate/>} exact/>
             </Routes>

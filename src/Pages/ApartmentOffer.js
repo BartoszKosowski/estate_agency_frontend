@@ -24,9 +24,30 @@ import {
 import description from "../data/description.json";
 import {OfferAgent} from "../Components/OfferAgent";
 import {PhotoGallery} from "../Components/PhotoGallery";
+import axios from "axios";
+import data from "../data/path.json";
 
 
 export class ApartmentOffer extends React.Component {
+
+    state = {
+        offer: []
+    }
+
+    componentDidMount() {
+        this.api.get(data.api.apartmentOffer.toString() + "/" + this.getParameter("o")).then(res => {
+            this.setState({offer: res.data});
+        })
+    }
+
+    api = axios.create({
+        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
+    })
+
+    getParameter(parameterName) {
+        let parameter = new URLSearchParams(window.location.search);
+        return parameter.get(parameterName);
+    }
 
     squareMeters = () => {
         return (
@@ -34,14 +55,73 @@ export class ApartmentOffer extends React.Component {
         )
     }
 
+    showRent = () => {
+        if (this.state.offer.HasRent) {
+            return (
+                <div>{this.state.offer.RentValue} PLN</div>
+            )
+        }
+    }
 
+    showRentIcon = () => {
+        if (this.state.offer.HasRent) {
+            return (
+                <div><FaHandHoldingUsd size={22} className={"float-left mr-2 mt-1"}/>Czynsz:</div>
+            )
+        }
+    }
+
+    showPrice = () => {
+        if (this.state.offer.OfferType === "sprzedaz") {
+            return (
+                <div>{this.state.offer.Price} PLN</div>
+            )
+        }
+    }
+
+    showPriceIcon = () => {
+        if (this.state.offer.OfferType === "sprzedaz") {
+            return (
+                <div><ImPriceTags size={22} className={"float-left mr-2 mt-1"}/>Cena:</div>
+            )
+        }
+    }
+
+    showPriceForMeter = () => {
+        if (this.state.offer.OfferType === "sprzedaz") {
+            return (
+                <div>{this.state.offer.PriceForMeter} PLN/{this.squareMeters()}</div>
+            )
+        }
+    }
+
+    showPriceForMeterIcon = () => {
+        if (this.state.offer.OfferType === "sprzedaz") {
+            return (
+                <div><SiBookmeter size={22} className={"float-left mr-2 mt-1"}/>Cena za {this.squareMeters()}:
+                </div>
+            )
+        }
+
+    }
+
+    getEquipment(roomEquipment) {
+        const equipments = roomEquipment?.split(",");
+        let eqi = [];
+        for (let i = 0; i < equipments?.length; i++) {
+            eqi.push(<div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>{equipments[i]}</div>);
+        }
+        return eqi;
+    }
+
+    //TODO naprawić wyświetlanie w liniach
     render() {
         return (
             <div className={"md:container mx-auto bg-gray-400"}>
 
                 <div className={"flex grid grid-cols-2 text-white border-b-2 border-white"}>
                     <div>{<PhotoGallery/>}</div>
-                    <div>{<OfferAgent agentNumber={1}/>}</div>
+                    <div>{<OfferAgent agentNumber={this.getParameter("a")}/>}</div>
                 </div>
 
                 <div className={"flex grid grid-cols-5 gap-4 text-white border-b-2 border-white"}>
@@ -50,21 +130,32 @@ export class ApartmentOffer extends React.Component {
                     </div>
                     <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
                         <div><AiFillBook size={22} className={"mr-2 mt-1 float-left"}/>Rynek:</div>
-
                         <div><MdEqualizer size={22} className={"float-left mr-2 mt-1"}/>Stan:</div>
                         <div><MdOutlineZoomOutMap size={22} className={"mr-2 mt-1 float-left"}/>Powierzchnia:</div>
                         <div><MdChair className={"mr-2 mt-1 float-left"} size={22}/>Umeblowanie:</div>
                         <div><MdOutlineBalcony size={22} className={"float-left mr-2 mt-1"}/>Balkon:</div>
                     </div>
-                    <div></div>
                     <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
-                        <div><AiOutlineColumnHeight size={22} className={"float-left mr-2 mt-1"}/>numer piętera:</div>
+                        <div>{this.state.offer.Market}</div>
+                        <div>{this.state.offer.PropertyState}</div>
+                        <div>{this.state.offer.PropertyArea} {this.squareMeters()}</div>
+                        <div>{this.state.offer.Furnishings ? "Tak" : "Nie"}</div>
+                        <div>{this.state.offer.HasBalcony ? "Tak" : "Nie"}</div>
+                    </div>
+                    <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
+                        <div><AiOutlineColumnHeight size={22} className={"float-left mr-2 mt-1"}/>piętro:</div>
                         <div><MdOutlineBedroomChild size={22} className={"float-left mr-2 mt-1"}/>Liczba pokoi:</div>
                         <div><FaBath size={22} className={"float-left mr-2 mt-1"}/> łazienka:</div>
                         <div><GiHomeGarage size={22} className={"float-left mr-2 mt-1"}/>Miejsce parkingowe:</div>
                         <div><AiFillFire size={22} className={"float-left mr-2 mt-1"}/>Ogrzewanie:</div>
                     </div>
-                    <div></div>
+                    <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
+                        <div>{this.state.offer.FloorNumber}</div>
+                        <div>{this.state.offer.NumberOfRooms}</div>
+                        <div>{this.state.offer.HasBathroom ? "Tak" : "Nie"}</div>
+                        <div>{this.state.offer.ParkingSpace ? "Tak" : "Nie"}</div>
+                        <div>{this.state.offer.Heating}</div>
+                    </div>
                 </div>
                 <div className={" grid grid-cols-5 gap-4 text-white border-b-2 border-white"}>
                     <div className={"flex text-right text-xl uppercase font-semibold"}>
@@ -72,22 +163,14 @@ export class ApartmentOffer extends React.Component {
                     </div>
                     <div className={"flex col-span-4 text-white text-lg grid grid-cols-1 uppercase"}>
                         <div><MdChair size={22} className={"float-left mr-2 mt-1"}/>Styl wnętrza: <span
-                            className={"ml-4"}>Modernizm</span></div>
+                            className={"ml-4"}>{this.state.offer.InsideDesign}</span></div>
                         <div><MdKitchen size={22} className={"float-left mr-2 mt-1"}/>Kuchnia:</div>
                         <div className={"normal-case text-base grid grid-cols-7 gap-3"}>
-                            <div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>Płyta indykcyjna
-                            </div>
-                            <div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>Zlewozmywak</div>
-                            <div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>Piekarnik</div>
-                            <div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>Zmywarka</div>
+                            {this.getEquipment(this.state.offer.KitchenEquipment)}
                         </div>
                         <div><FaBath size={22} className={"float-left mr-2 mt-1"}/>łazienka:</div>
                         <div className={"normal-case text-base grid grid-cols-7 gap-3"}>
-                            <div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>Kabina prysznicowa
-                            </div>
-                            <div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>Umywalka</div>
-                            <div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>Pralka</div>
-                            <div><BsBookmarkCheckFill size={14} className={"float-left mr-2 mt-1"}/>Suszarka</div>
+                            {this.getEquipment(this.state.offer.BathroomEquipment)}
                         </div>
                     </div>
                 </div>
@@ -99,10 +182,17 @@ export class ApartmentOffer extends React.Component {
                         <div><MdApartment size={22} className={"float-left mr-2 mt-1"}/>Nazwa budynku:</div>
                         <div><BsFillCalendar2EventFill size={22} className={"float-left mr-2 mt-1"}/>Rok budowy:</div>
                     </div>
-                    <div/>
+                    <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
+                        <div>{this.state.offer.BuildingName}</div>
+                        <div>{this.state.offer.BuildYear}</div>
+                    </div>
                     <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
                         <div><FaBuilding size={22} className={"float-left mr-2 mt-1"}/>Rodzaj budynku:</div>
                         <div><HiOutlineMenu size={22} className={"float-left mr-2 mt-1"}/>Liczba pięter:</div>
+                    </div>
+                    <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
+                        <div>{this.state.offer.BuildingType}</div>
+                        <div>{this.state.offer.NumberOfFloors}</div>
                     </div>
                 </div>
                 <div className={" grid grid-cols-5 gap-4 text-white border-b-2 border-white"}>
@@ -110,23 +200,28 @@ export class ApartmentOffer extends React.Component {
                         Oferta
                     </div>
                     <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
-                        <div><ImPriceTags size={22} className={"float-left mr-2 mt-1"}/>Cena:</div>
-                        <div><SiBookmeter size={22} className={"float-left mr-2 mt-1"}/>Cena za {this.squareMeters()}:
-                        </div>
-                        <div><FaHandHoldingUsd size={22} className={"float-left mr-2 mt-1"}/>Czynsz:</div>
+                        {this.showPriceIcon()}
+                        {this.showPriceForMeterIcon()}
+                        {this.showRentIcon()}
                         <div><CgFileDocument size={22} className={"float-left mr-2 mt-1"}/>numer oferty:</div>
                     </div>
+                    <div className={"flex text-white text-lg grid grid-cols-1 uppercase"}>
+                        {this.showPrice()}
+                        {this.showPriceForMeter()}
+                        {this.showRent()}
+                        <div>{this.state.offer.IdOffers}</div>
+                    </div>
                 </div>
-                <div className={"grid grid-cols-5 gap-4 border-b-2 border-white text-white"}>
+                <div className={"grid grid-cols-5 gap-4 text-white"}>
                     <div className={"flex text-right text-xl uppercase font-semibold"}>Lokalizacja</div>
                     <div className={"col-span-4 grid place-items-center"}>
                         <iframe
-                            src={"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1274.640438870381!2d18.6772782!3d50.2866846!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47113103062bee1f%3A0xc8fb0647d8c52586!2sKujawska%202%2C%2044-100%20Gliwice!5e0!3m2!1spl!2spl!4v1636922631195!5m2!1spl!2spl"}
+                            src={this.state.offer.GoogleMapsUrl}
                             width={"600"} height={"450"} loading="lazy" title={"headquarters-map"}
                             className={"mt-10 mb-10"}/>
                     </div>
                 </div>
-                <div className={"grid grid-cols-5 gap-4 border-b-2 border-white text-white"}>
+                <div className={"grid grid-cols-5 gap-4 border-white text-white"}>
                     <div className={"flex text-right text-xl uppercase font-semibold"}>
                         Opis
                     </div>

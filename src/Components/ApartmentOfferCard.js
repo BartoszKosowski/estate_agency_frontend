@@ -24,12 +24,31 @@ export class ApartmentOfferCard extends React.Component {
         )
     }
 
+    hasRent = (offer) => {
+        if (offer.HasRent) {
+            return (
+                <span className={"text-2xl"}>
+                            {offer.Price} PLN/msc
+                        </span>
+            )
+        } else {
+            return (
+                <div>
+                    {offer.Price} PLN
+                    <br/>
+                    {offer.PriceForMeter} PLN/{this.squareMeters()}
+                    <br/>
+                </div>
+            )
+        }
+    }
+
 
     render() {
         return (
             <div>
                 {this.state.offers.map(offer =>
-                    <Link to={`/apartment-offer/${offer.IdOffer}`}>
+                    <Link to={{pathname: `/apartmentOffer?o=${offer.IdOffer}&a=${offer.Agent}`}}>
                         <div className={"md: flex mb-10 mx-auto w-full"}>
                             <div className={"w-2/5 flex-wrap float-left bg-pink-400"}>
                                 <img className={"w-full object-contain h-full m-auto"} src={offer.MainPhotoUrl}
@@ -56,12 +75,7 @@ export class ApartmentOfferCard extends React.Component {
                                         {offer.InsideDesign}
                                     </div>
                                     <div className={"float-right inline-block items-end content-end text-right mr-5"}>
-                        <span className={"text-2xl"}>
-                            {offer.Price}
-                        </span>
-                                        <br/>
-                                        {offer.PriceForMeter}PLN/{this.squareMeters()}
-                                        <br/>
+                                        {this.hasRent(offer)}
                                     </div>
                                 </div>
                                 <div
