@@ -8,15 +8,15 @@ export class ApartmentOfferCard extends React.Component {
         offers: []
     }
 
-    api = axios.create({
-        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
-    })
-
-    componentDidMount() {
-        this.api.get(data.api.apartmentOfferPreviews.toString()).then(res => {
+    async componentDidMount() {
+        await this.api.get(data.api.apartmentOfferPreviews.toString()).then(res => {
             this.setState({offers: res.data})
         })
     }
+
+    api = axios.create({
+        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
+    })
 
     squareMeters = () => {
         return (
@@ -50,7 +50,7 @@ export class ApartmentOfferCard extends React.Component {
                 {this.state.offers.map(offer =>
                     <Link to={{pathname: `/apartmentOffer?o=${offer.IdOffer}&a=${offer.Agent}`}}>
                         <div className={"md: flex mb-10 mx-auto w-full"}>
-                            <div className={"w-2/5 flex-wrap float-left bg-pink-400"}>
+                            <div className={"w-2/5 flex-wrap float-left"}>
                                 <img className={"w-full object-contain h-full m-auto"} src={offer.MainPhotoUrl}
                                      alt={"offer estate"}/>
                             </div>

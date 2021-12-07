@@ -8,12 +8,7 @@ import axios from "axios";
 import data from "../data/path.json";
 import {ApartmentOfferCard} from "../Components/ApartmentOfferCard";
 
-const api = axios.create({
-    baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
-})
-
 export class Search extends React.Component {
-
     state = {
         colors: [
             {value: "red", label: "Red"},
@@ -32,15 +27,18 @@ export class Search extends React.Component {
 
     animatedComponents = makeAnimated();
 
+    api = axios.create({
+        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
+    })
 
-    componentDidMount() {
-        api.get(data.api.tradeInfos.propertyType.toString()).then(res => {
+    async componentDidMount() {
+        await this.api.get(data.api.tradeInfos.propertyType.toString()).then(res => {
             this.setState({propertyType: res.data})
         })
-        api.get(data.api.tradeInfos.market.toString()).then(res => {
+        await this.api.get(data.api.tradeInfos.market.toString()).then(res => {
             this.setState({market: res.data})
         })
-        api.get(data.api.estateOfferPreviews.toString()).then(res => {
+        await this.api.get(data.api.estateOfferPreviews.toString()).then(res => {
             this.setState({city: res.data})
         })
     }

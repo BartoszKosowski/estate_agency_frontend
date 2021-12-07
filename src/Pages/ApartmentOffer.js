@@ -29,13 +29,12 @@ import data from "../data/path.json";
 
 
 export class ApartmentOffer extends React.Component {
-
     state = {
         offer: []
     }
 
-    componentDidMount() {
-        this.api.get(data.api.apartmentOffer.toString() + "/" + this.getParameter("o")).then(res => {
+    async componentDidMount() {
+        await this.api.get(data.api.apartmentOffer.toString() + "/" + this.getParameter("o")).then(res => {
             this.setState({offer: res.data});
         })
     }

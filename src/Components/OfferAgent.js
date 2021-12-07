@@ -3,21 +3,21 @@ import data from "../data/path.json";
 import {BiPhone, HiOutlineMail} from "react-icons/all";
 import axios from "axios";
 
-const api = axios.create({
-    baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
-})
-
-
 export class OfferAgent extends React.Component {
     state = {
         agents: []
     }
 
-    componentDidMount() {
-        api.get(data.api.agents.toString() + "/" + this.props.agentNumber.toString())
+    async componentDidMount() {
+        await this.api.get(data.api.agents.toString() + "/" + this.props.agentNumber.toString())
             .then(res => this.setState({agents: res.data}))
 
     }
+
+    api = axios.create({
+        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
+    })
+
 
     render() {
         return (

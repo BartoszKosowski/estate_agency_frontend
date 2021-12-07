@@ -8,15 +8,15 @@ export class HouseOfferCard extends React.Component {
         offers: []
     }
 
-    api = axios.create({
-        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
-    })
-
-    componentDidMount() {
-        this.api.get(data.api.estateOfferPreviews.toString()).then(res => {
+    async componentDidMount() {
+        await this.api.get(data.api.estateOfferPreviews.toString()).then(res => {
             this.setState({offers: res.data})
         })
     }
+
+    api = axios.create({
+        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
+    })
 
     squareMeters = () => {
         return (
@@ -51,7 +51,7 @@ export class HouseOfferCard extends React.Component {
                 {this.state.offers.map(offer =>
                     <Link to={`/houseOffer?o=${offer.IdOffer}&a=${offer.Agent}`}>
                         <div className={"md: flex mb-10 mx-auto w-full"}>
-                            <div className={"w-2/5 flex-wrap float-left bg-pink-400"}>
+                            <div className={"w-2/5 flex-wrap float-left"}>
                                 <img className={"w-full object-contain h-full m-auto"} src={offer.MainPhotoUrl}
                                      alt={"offer estate"}/>
                             </div>
@@ -65,7 +65,7 @@ export class HouseOfferCard extends React.Component {
                         </span>
                                     </div>
                                 </div>
-                                <div className={"ml-5  mt-5 text-lg flex grid grid-cols-2 font-semibold text-white"}>
+                                <div className={"ml-5 mt-5 text-lg flex grid grid-cols-2 font-semibold text-white"}>
                                     <div>
                                         ul. {offer.Street}
                                         <br/>

@@ -29,9 +29,14 @@ import axios from "axios";
 import data from "../data/path.json";
 
 export class HouseOffer extends React.Component {
-
     state = {
         offer: []
+    }
+
+    async componentDidMount() {
+        await this.api.get(data.api.estateOffer.toString() + "/" + this.getParameter("o")).then(res => {
+            this.setState({offer: res.data})
+        })
     }
 
     api = axios.create({
@@ -47,12 +52,6 @@ export class HouseOffer extends React.Component {
     getParameter(parameterName) {
         let parameter = new URLSearchParams(window.location.search);
         return parameter.get(parameterName);
-    }
-
-    componentDidMount() {
-        this.api.get(data.api.estateOffer.toString() + "/" + this.getParameter("o")).then(res => {
-            this.setState({offer: res.data})
-        })
     }
 
     showRent = () => {
