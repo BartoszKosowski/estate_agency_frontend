@@ -13,6 +13,7 @@
   },
   "api": {
     "addresses": "api/Addresses",
+    "cities": "api/Addresses/cities",
     "agents": "api/Agents",
     "apartment": "api/Apartments",
     "apartmentOffer": "api/ApartmentOffers",
@@ -25,10 +26,11 @@
     "photos": "api/Photos",
     "requests": "api/Requests",
     "statuses": "api/Status",
+    "estateStatuses": "api/Status/domain/property",
     "tradeInfos": {
       "all": "api/TradeInfoes",
-      "market": "api/TradeInfoes/market",
-      "propertyType": "api/TradeInfoes/propertyType",
+      "market": "api/TradeInfoes/domain/market",
+      "property": "api/TradeInfoes/domain/property",
       "services": "api/TradeInfoes/services",
       "tradeArea": "api/TradeInfoes/tradeArea"
     }

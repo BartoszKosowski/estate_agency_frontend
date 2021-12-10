@@ -9,9 +9,16 @@ export class HouseOfferCard extends React.Component {
     }
 
     async componentDidMount() {
-        await this.api.get(data.api.estateOfferPreviews.toString()).then(res => {
-            this.setState({offers: res.data})
-        })
+        if (this.props.query === "") {
+            await this.api.get(data.api.estateOfferPreviews.toString()).then(res => {
+                this.setState({offers: res.data})
+            })
+        } else {
+
+            await this.api.get(data.api.estateOfferPreviews.toString() + "/" + this.props.query).then(res => {
+                this.setState({offers: res.data})
+            })
+        }
     }
 
     api = axios.create({
