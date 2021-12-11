@@ -15,16 +15,18 @@ export class Search extends React.Component {
     }
 
     state = {
-        colors: [
-            {value: "red", label: "Red"},
-            {value: "blue", label: "Blue"}
-        ],
-        offerType: [
-            {value: "sprzedaz", label: "sprzedaż"},
-            {value: "wynajem", label: "wynajem"}
-        ],
-        properties: [],
+        agents: [],
+        agentsList: [],
+        areaFrom: "",
+        areaTo: "",
         cities: [],
+        citiesList: [],
+        estateStatuses: [],
+        estateStatusesList: [],
+        facilities: [],
+        floorsFrom: "",
+        floorsTo: "",
+        justSearch: false,
         location: [
             {value: "near_forest", label: "Niedaleko lasu"},
             {value: "near_river", label: "Niedaleko rzeki"},
@@ -35,41 +37,35 @@ export class Search extends React.Component {
             {value: "near_lake", label: "Niedaleko jeziora"},
             {value: "near_coast", label: "Nad morzem"}
         ],
-        facilities: [],
-        agents: [],
-        agentsList: [],
-        selectedFacilities: [],
-        estateStatuses: [],
-        estateStatusesList: [],
-        roomsFrom: "",
-        roomsTo: "",
-        priceFrom: "",
-        priceTo: "",
-        priceForMeterFrom: "",
-        priceForMeterTo: "",
-        areaFrom: "",
-        areaTo: "",
-        floorsFrom: "",
-        floorsTo: "",
-        selectedPropertyType: "",
-        selectedOfferType: "",
-        selectedCity: "",
-        selectedMarket: "",
-        selectedLocations: [],
-        selectedAgents: [],
-        selectedStatus: "",
+        market: [
+            {value: "Pierwotny", label: "Pierwotny"},
+            {value: "Wtórny", label: "Wtórny"}
+        ],
         onlyApartments: false,
         onlyEstates: false,
+        offerType: [
+            {value: "sprzedaz", label: "sprzedaż"},
+            {value: "wynajem", label: "wynajem"}
+        ],
+        priceForMeterFrom: "",
+        priceForMeterTo: "",
+        priceFrom: "",
+        priceTo: "",
+        properties: [],
+        propertyTypesList: [],
+        roomsFrom: "",
+        roomsTo: "",
         query: "",
+        selectedAgents: [],
+        selectedCity: "",
+        selectedFacilities: [],
+        selectedLocations: [],
+        selectedMarket: "",
+        selectedOfferType: "",
+        selectedPropertyType: "",
+        selectedStatus: "",
         wasSearch: false,
-        justSearch: false
     }
-
-    animatedComponents = makeAnimated();
-
-    api = axios.create({
-        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
-    })
 
     async componentDidMount() {
         await this.api.get(data.api.tradeInfos.property.toString()).then(res => {
@@ -90,21 +86,39 @@ export class Search extends React.Component {
         })
 
         this.getAgents();
+        this.getCities();
         this.getEstateStatusesList();
+        this.getPropertyTypes();
     }
 
-    getCities() {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.justSearch === true) {
+            this.setState({wasSearch: true})
+            this.renderOffers()
+            this.setState({justSearch: false})
+        }
+    }
+
+    animatedComponents = makeAnimated();
+
+    api = axios.create({
+        baseURL: "https://" + data.env.dev.realEstateAgencyAPI.hostName + ":" + data.env.dev.realEstateAgencyAPI.port
+    })
+
+    //region getters
+
+    getCities = () => {
         return (
             this.state.cities.map(c =>
-                <option key={c}>{c}</option>
+                this.state.citiesList.push({value: c, label: c})
             )
         )
     }
 
-    getProperties = () => {
+    getPropertyTypes = () => {
         return (
             this.state.properties.map(p =>
-                <option key={p}>{p}</option>
+                this.state.propertyTypesList.push({value: p, label: p})
             )
         )
     }
@@ -121,6 +135,9 @@ export class Search extends React.Component {
         )
     }
 
+    //endregion
+
+    //region handlers
     handleChangePriceForMeterFrom = (event) => {
         this.setState({priceForMeterFrom: event.target.value})
     }
@@ -161,6 +178,55 @@ export class Search extends React.Component {
         this.setState({priceTo: event.target.value})
     }
 
+    handleSearch = () => {
+        this.setState({justSearch: true})
+        if (this.state.selectedPropertyType === "Mieszkanie") {
+            this.setState({onlyApartments: true})
+        }
+
+        if (this.state.selectedPropertyType.length > 0 && this.state.selectedPropertyType !== "Mieszkanie") {
+            this.setState({onlyEstates: true})
+        }
+
+        if (this.state.onlyApartments === false && this.state.onlyEstates === false) {
+            this.setState({onlyApartments: true})
+            this.setState({onlyEstates: true})
+        }
+
+        this.renderOffers()
+    }
+
+
+    handleSelectAgents = (selectedAgents) => {
+        this.setState({selectedAgents})
+    }
+
+    handleSelectLocations = (selectedLocations) => {
+        this.setState({selectedLocations})
+    }
+
+    handleSelectStatus = (selectedStatus) => {
+        this.setState({selectedStatus})
+    }
+
+    handleSelectOfferType = (selectedOfferType) => {
+        this.setState({selectedOfferType})
+    }
+
+    handleSelectCity = (selectedCity) => {
+        this.setState({selectedCity})
+    }
+
+    handleSelectMarket = (selectedMarket) => {
+        this.setState({selectedMarket})
+    }
+
+    handleSelectPropertyType = (selectedPropertyType) => {
+        this.setState({selectedPropertyType})
+    }
+
+    //endregion
+
     squareMeter() {
         return (
             <span>m<sup>2</sup></span>
@@ -179,18 +245,18 @@ export class Search extends React.Component {
     createQueryString = () => {
         let query = "";
         if (this.state.selectedPropertyType !== "") {
-            query += ("propertyType-" + this.state.selectedPropertyType + "~");
+            query += ("propertyType-" + this.state.selectedPropertyType.value + "~");
         }
         if (this.state.selectedOfferType !== "") {
-            query += ("offerType-" + this.state.selectedOfferType + "~");
+            query += ("offerType-" + this.state.selectedOfferType.value + "~");
         }
 
         if (this.state.selectedCity !== "") {
-            query += ("city-" + this.state.selectedCity + "~");
+            query += ("city-" + this.state.selectedCity.value + "~");
         }
 
         if (this.state.selectedMarket !== "") {
-            query += ("market-" + this.state.selectedMarket + "~");
+            query += ("market-" + this.state.selectedMarket.value + "~");
         }
 
         if (this.state.areaFrom !== "") {
@@ -236,18 +302,19 @@ export class Search extends React.Component {
         if (this.state.selectedAgents.length > 0) {
             query += ("agents-")
             this.state.selectedAgents.map(agent => {
-                query += ("_" + agent.IdAgent)
+                return query += ("_" + agent.IdAgent)
             })
             query += ("~")
         }
 
         if (this.state.selectedStatus !== "") {
-            query += ("state-" + this.state.selectedStatus + "~");
+            query += ("state-" + this.state.selectedStatus.value + "~");
         }
 
+        //TODO check if that works correctly
         if (this.state.selectedLocations.length > 0) {
             this.state.selectedLocations.map(location => {
-                query += (this.state.selectedLocations + "~")
+                return query += (this.state.selectedLocations.value + "~")
             })
         }
 
@@ -264,17 +331,7 @@ export class Search extends React.Component {
         return query;
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("2")
-        if (this.state.justSearch === true) {
-            this.setState({wasSearch: true})
-            console.log("to też")
-            this.renderOffers()
-            this.setState({justSearch: false})
-        }
-
-    }
-
+    //TODO check what's wrong with that
     renderOffers() {
         if (this.state.wasSearch === false) {
             return (
@@ -292,10 +349,10 @@ export class Search extends React.Component {
             return (
                 <div>
                     <div className={"mx-10 mx-auto w-3/4 mt-20"}>
-                        {<HouseOfferCard query={this.createQueryString()}/>}
+                        {<HouseOfferCard query={this.createQueryString().toString()}/>}
                     </div>
                     <div className={"mx-10 mx-auto w-3/4 mt-20\""}>
-                        {<ApartmentOfferCard query={this.createQueryString()}/>}
+                        {<ApartmentOfferCard query={this.createQueryString().toString()}/>}
                     </div>
                 </div>
             )
@@ -370,17 +427,21 @@ export class Search extends React.Component {
 
                     <div className={"w-full"}>
                         <Select options={this.state.agentsList}
+                                value={this.state.selectedAgents}
                                 closeMenuOnSelect={false}
                                 components={this.animatedComponents}
                                 isMulti
+                                onChange={this.handleSelectAgents}
                                 placeholder={"Agent"}/>
                     </div>
 
                     <div className={"w-full"}>
                         <Select options={this.state.location}
+                                value={this.state.selectedLocations}
                                 closeMenuOnSelect={false}
                                 components={this.animatedComponents}
                                 isMulti
+                                onChange={this.handleSelectLocations}
                                 placeholder={"Lokalizacja"}/>
                     </div>
                     <div className={"grid grid-cols-2 gap-6"}>
@@ -388,31 +449,13 @@ export class Search extends React.Component {
                             <Select options={this.state.estateStatusesList}
                                     closeMenuOnSelect={true}
                                     components={this.animatedComponents}
+                                    onChange={this.handleSelectStatus}
                                     placeholder={"Stan"}/>
                         </div>
                     </div>
                 </div>
             </div>
         )
-    }
-
-
-    handleSearch = () => {
-        alert(this.state.areaTo)
-        this.setState({justSearch: true})
-        if (this.state.selectedPropertyType === "Apartment") {
-            this.setState({onlyApartments: true})
-        }
-
-        if (this.state.selectedPropertyType.length > 0 && this.state.selectedPropertyType !== "Mieszkanie") {
-            this.setState({onlyEstates: true})
-        }
-
-        if (this.state.onlyApartments === false && this.state.onlyEstates === false) {
-            this.setState({onlyApartments: true})
-            this.setState({onlyEstates: true})
-        }
-        console.log("działa");
     }
 
     render() {
@@ -423,29 +466,31 @@ export class Search extends React.Component {
                 </div>
                 <div className={"grid grid-cols-3 gap-8 mx-5 mt-5 text-center"}>
                     <div className={"w-full"}>
-                        <select
-                            className="w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="estateSelect">
-                            <option selected={"selected"} hidden>Rodzaj nieruchomości</option>
-                            {this.getProperties()}
-                        </select>
+                        <Select
+                            options={this.state.propertyTypesList}
+                            value={this.state.selectedPropertyType}
+                            CloseMenuOnSelect={true}
+                            onChange={this.handleSelectPropertyType}
+                            components={this.animatedComponents}
+                            placeholder={"Typ nieruchomości"}/>
                     </div>
                     <div className={"w-full"}>
-                        <select
-                            className="w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="serviceSelect">
-                            <option selected={"selected"} hidden>Typ oferty</option>
-                            <option>Sprzedaż</option>
-                            <option>Wynajem</option>
-                        </select>
+                        <Select
+                            options={this.state.offerType}
+                            value={this.state.selectedOfferType}
+                            CloseMenuOnSelect={true}
+                            onChange={this.handleSelectOfferType}
+                            components={this.animatedComponents}
+                            placeholder={"Typ oferty"}/>
                     </div>
                     <div className={"w-full"}>
-                        <select
-                            className="w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            id="citiesSelect">
-                            <option selected={"selected"} hidden>Miasto</option>
-                            {this.getCities()}
-                        </select>
+                        <Select
+                            options={this.state.citiesList}
+                            value={this.state.selectedCity}
+                            CloseMenuOnSelect={true}
+                            onChange={this.handleSelectCity}
+                            components={this.animatedComponents}
+                            placeholder={"Miasto"}/>
                     </div>
                 </div>
                 <div className={"grid grid-cols-3 gap-10 mx-5 mt-5"}>
@@ -475,13 +520,13 @@ export class Search extends React.Component {
                             </Disclosure>
                         </div>
                         <div className={"w-full"}>
-                            <select
-                                className="w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="Select">
-                                <option selected={"selected"} hidden>Rynek</option>
-                                <option>Pierwotny</option>
-                                <option>Wtórny</option>
-                            </select>
+                            <Select
+                                options={this.state.market}
+                                value={this.state.selectedMarket}
+                                CloseMenuOnSelect={true}
+                                onChange={this.handleSelectMarket}
+                                components={this.animatedComponents}
+                                placeholder={"Rynek"}/>
                         </div>
                     </div>
                     <div className={"grid grid-cols-2 gap-6 w-full"}>
@@ -524,5 +569,4 @@ export class Search extends React.Component {
             </div>
         )
     }
-
 }
