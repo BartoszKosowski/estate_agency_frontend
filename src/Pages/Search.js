@@ -1,5 +1,5 @@
 import React from "react";
-import {Disclosure} from "@headlessui/react";
+import {Popover} from "@headlessui/react";
 import {FiChevronDown} from "react-icons/all";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
@@ -7,6 +7,7 @@ import {HouseOfferCard} from "../Components/HouseOfferCard";
 import axios from "axios";
 import data from "../data/path.json";
 import {ApartmentOfferCard} from "../Components/ApartmentOfferCard";
+import {withRouter} from "react-router-dom";
 
 export class Search extends React.Component {
     constructor(props) {
@@ -68,6 +69,7 @@ export class Search extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(this.props.location.state)
         await this.api.get(data.api.tradeInfos.property.toString()).then(res => {
             this.setState({properties: res.data})
         })
@@ -496,28 +498,18 @@ export class Search extends React.Component {
                 <div className={"grid grid-cols-3 gap-10 mx-5 mt-5"}>
                     <div className={"grid grid-cols-2 gap-6 w-full"}>
                         <div className={"w-full"}>
-                            <Disclosure>
-                                {({open}) => (
-                                    <>
-                                        {/*TODO hide that button*/}
-                                        <Disclosure.Button as={"button"}
-                                                           className={"flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-white bg-gray-200 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"}
-                                                           id={"showButton"}>
-                                            <span>Wicej opcji</span>
-                                            <FiChevronDown
-                                                className={`${
-                                                    open ? 'transform rotate-180' : ''
-                                                } w-5 h-5 text-purple-500`}
-                                            />
-                                        </Disclosure.Button>
-                                        <Disclosure.Panel className={"w-screen bg-transparent -ml-10"}>
-                                            <div className={"container"}>
-                                                {this.moreOptions()}
-                                            </div>
-                                        </Disclosure.Panel>
-                                    </>
-                                )}
-                            </Disclosure>
+                            <Popover>
+                                <Popover.Button as={"button"}
+                                                className={"flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-white bg-gray-200 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"}>
+                                    <span>Więcej opcji</span>
+
+                                </Popover.Button>
+                                <Popover.Panel className={"w-screen bg-transparent -ml-10"}>
+                                    <div className={"container"}>
+                                        {this.moreOptions()}
+                                    </div>
+                                </Popover.Panel>
+                            </Popover>
                         </div>
                         <div className={"w-full"}>
                             <Select
@@ -570,3 +562,5 @@ export class Search extends React.Component {
         )
     }
 }
+
+export default withRouter(Search);

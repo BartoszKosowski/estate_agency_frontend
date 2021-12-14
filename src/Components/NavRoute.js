@@ -25,7 +25,7 @@ export const NavRoute = () => {
                 <Route path={"/contact-us"} element={<ContactUs/>} exact/>
                 <Route path={"/inside-design"} element={<InsideDesign/>} exact/>
                 <Route path={"/houseOffer"} exact element={<HouseOffer/>}/>
-                <Route path={"/search"} element={<Search/>}/>
+                <Route path={"/search"} element={<Search/>} exact/>
                 <Route path={"/sell-estate"} element={<SellEstate/>} exact/>
             </Routes>
         </BrowserRouter>
