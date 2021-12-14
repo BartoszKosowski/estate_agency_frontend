@@ -22,35 +22,50 @@ export class Home extends React.Component {
         selectedPrice: -1,
         selectedArea: -1,
         selectedCity: "",
-        pathname: ""
+        pathname: "",
+        query: "",
+        wasChange: false
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.state.wasChange === true) {
+            this.setState({wasChange: false})
+            this.setState({query: this.getPathString()}, () => console.log(this.state.query))
+        }
+
     }
 
     handleSelectOfferBuilding = (selectedOfferBuilding) => {
         this.setState({selectedOfferBuilding})
+        this.setState({wasChange: true})
     }
 
     handleSelectOfferType = (selectedOfferType) => {
-        this.setState({selectedOfferType})
+        this.setState({selectedOfferType}, () => console.log(this.state.selectedOfferType.value))
+        this.setState({wasChange: true})
     }
 
     handleSelectPrice = (event) => {
-        this.setState({selectedPrice: parseInt(event.target.value)})
+        this.setState({selectedPrice: parseInt(event.target.value)}, () => console.log(this.state.selectedPrice))
+        this.setState({wasChange: true})
     }
 
     handleSelectArea = (event) => {
         this.setState({selectedArea: parseInt(event.target.value)})
+        this.setState({wasChange: true})
     }
 
     handleSelectCity = (event) => {
-        this.setState({selectedCity: event.target.value})
+        this.setState({selectedCity: event.target.value}, () => console.log(this.state.selectedCity))
+        this.setState({wasChange: true})
     }
 
-    getPathString = () => {
+    getPathString() {
         let query = ""
-        if (this.state.selectedOfferType !== "" && this.state.selectedOfferType !== null) {
+        if (this.state.selectedOfferType !== null && this.state.selectedOfferType !== "") {
             query += "o-" + this.state.selectedOfferType.value + "~"
         }
-        if (this.state.selectedOfferBuilding !== "" && this.state.offerBuilding !== null) {
+        if (this.state.selectedOfferBuilding !== null && this.state.selectedOfferType !== "") {
             query += "b-" + this.state.selectedOfferBuilding.value + "~"
         }
         if (this.state.selectedPrice !== -1 && this.state.selectedPrice !== null) {
@@ -63,9 +78,7 @@ export class Home extends React.Component {
             query += "c-" + this.state.selectedCity + "~"
         }
 
-        if (query.length !== 0) {
-            query = query.substring(0, query.length - 1)
-        }
+        query = query.substring(0, query.length - 1)
         console.log(query)
         return (
             query
@@ -116,7 +129,7 @@ export class Home extends React.Component {
                             onChange={this.handleSelectCity}/>
                     </div>
                     <div>
-                        <Link to={{pathname: `/search`, state: this.getPathString}}>
+                        <Link to={`/search?${this.state.query}`}>
                             <button
                                 className=" bg-purple-700 hover:bg-purple-500 ml-3 text-white text-xl font-bold rounded text-center w-40 mt-2">
                                 Szukaj

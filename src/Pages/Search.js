@@ -69,7 +69,6 @@ export class Search extends React.Component {
     }
 
     async componentDidMount() {
-        console.log(this.props.location.state)
         await this.api.get(data.api.tradeInfos.property.toString()).then(res => {
             this.setState({properties: res.data})
         })
@@ -562,5 +561,3 @@ export class Search extends React.Component {
         )
     }
 }
-
-export default withRouter(Search);
