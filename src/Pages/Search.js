@@ -7,7 +7,6 @@ import {HouseOfferCard} from "../Components/HouseOfferCard";
 import axios from "axios";
 import data from "../data/path.json";
 import {ApartmentOfferCard} from "../Components/ApartmentOfferCard";
-import {withRouter} from "react-router-dom";
 
 export class Search extends React.Component {
     constructor(props) {
@@ -66,9 +65,13 @@ export class Search extends React.Component {
         selectedPropertyType: "",
         selectedStatus: "",
         wasSearch: false,
+        checkParams: false,
+
     }
 
     async componentDidMount() {
+        this.CheckParams();
+
         await this.api.get(data.api.tradeInfos.property.toString()).then(res => {
             this.setState({properties: res.data})
         })
@@ -90,6 +93,7 @@ export class Search extends React.Component {
         this.getCities();
         this.getEstateStatusesList();
         this.getPropertyTypes();
+
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -99,6 +103,50 @@ export class Search extends React.Component {
             this.setState({justSearch: false})
         }
     }
+
+
+    //region fuzzySearch
+
+    CheckParams() {
+        let parameter = new URLSearchParams(window.location.search);
+        if (parameter.toString().length > 0) {
+            this.setState({checkParams: true})
+        }
+    }
+
+    getParameter(parameterName) {
+        let parameter = new URLSearchParams(window.location.search);
+        return parameter.get(parameterName);
+    }
+
+    setFuzzyQuery() {
+        let query = "";
+        if (this.getParameter("o") !== null) {
+            query += "offerType-" + this.getParameter("o") + "~"
+        }
+        if (this.getParameter("b") !== null) {
+            query += "building-" + this.getParameter("b") + "~"
+        }
+        if (this.getParameter("p") !== null) {
+            query += "price-" + this.getParameter("p") + "~"
+        }
+        if (this.getParameter("a") !== null) {
+            query += "area-" + this.getParameter("a") + "~"
+        }
+        if (this.getParameter("c") !== null) {
+            query += "city-" + this.getParameter("c") + "~"
+        }
+
+        if (query.length === 0) {
+            query = "empty"
+        } else {
+            query = query.substring(0, query.length - 1);
+        }
+
+        return query;
+    }
+
+    //endregion
 
     animatedComponents = makeAnimated();
 
@@ -246,18 +294,18 @@ export class Search extends React.Component {
     createQueryString = () => {
         let query = "";
         if (this.state.selectedPropertyType !== "") {
-            query += ("propertyType-" + this.state.selectedPropertyType.value + "~");
+            query += ("propertyType-" + encodeURIComponent(this.state.selectedPropertyType.value) + "~");
         }
         if (this.state.selectedOfferType !== "") {
-            query += ("offerType-" + this.state.selectedOfferType.value + "~");
+            query += ("offerType-" + encodeURIComponent(this.state.selectedOfferType.value) + "~");
         }
 
         if (this.state.selectedCity !== "") {
-            query += ("city-" + this.state.selectedCity.value + "~");
+            query += ("city-" + encodeURIComponent(this.state.selectedCity.value) + "~");
         }
 
         if (this.state.selectedMarket !== "") {
-            query += ("market-" + this.state.selectedMarket.value + "~");
+            query += ("market-" + encodeURIComponent(this.state.selectedMarket.value) + "~");
         }
 
         if (this.state.areaFrom !== "") {
@@ -303,7 +351,7 @@ export class Search extends React.Component {
         if (this.state.selectedAgents.length > 0) {
             query += ("agents-")
             this.state.selectedAgents.map(agent => {
-                return query += ("_" + agent.IdAgent)
+                return query += encodeURIComponent("_" + agent.IdAgent)
             })
             query += ("~")
         }
@@ -315,7 +363,7 @@ export class Search extends React.Component {
         //TODO check if that works correctly
         if (this.state.selectedLocations.length > 0) {
             this.state.selectedLocations.map(location => {
-                return query += (this.state.selectedLocations.value + "~")
+                return query += encodeURIComponent(this.state.selectedLocations.value + "~")
             })
         }
 
@@ -334,6 +382,20 @@ export class Search extends React.Component {
 
     //TODO check what's wrong with that
     renderOffers() {
+        if (this.state.checkParams === true) {
+            console.log(this.setFuzzyQuery())
+            return (
+                <div>
+                    <div className={"mx-10 mx-auto w-3/4 mt-20"}>
+                        {<HouseOfferCard fuzzyQuery={1} query={this.setFuzzyQuery()}/>}
+                    </div>
+                    <div className={"mx-10 mx-auto w-3/4 mt-20\""}>
+                        {<ApartmentOfferCard fuzzyQuery={1} query={this.setFuzzyQuery()}/>}
+                    </div>
+                </div>
+            )
+        }
+
         if (this.state.wasSearch === false) {
             return (
                 <div>

@@ -9,15 +9,19 @@ export class HouseOfferCard extends React.Component {
     }
 
     async componentDidMount() {
-        if (this.props.query === "") {
-            await this.api.get(data.api.estateOfferPreviews.toString()).then(res => {
-                this.setState({offers: res.data})
-            })
+        if (this.props.fuzzyQuery === 1) {
+            console.log("AAAA")
         } else {
-
-            await this.api.get(data.api.estateOfferPreviews.toString() + "/" + this.props.query).then(res => {
-                this.setState({offers: res.data})
-            })
+            if (this.props.query === "") {
+                console.log("Dziala")
+                await this.api.get(data.api.estateOfferPreviews.toString()).then(res => {
+                    this.setState({offers: res.data})
+                })
+            } else {
+                await this.api.get(data.api.estateOfferPreviews.toString() + "/" + this.props.query).then(res => {
+                    this.setState({offers: res.data})
+                })
+            }
         }
     }
 

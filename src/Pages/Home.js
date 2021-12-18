@@ -30,7 +30,7 @@ export class Home extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.wasChange === true) {
             this.setState({wasChange: false})
-            this.setState({query: this.getPathString()}, () => console.log(this.state.query))
+            this.setState({query: this.getPathString()})
         }
 
     }
@@ -41,12 +41,12 @@ export class Home extends React.Component {
     }
 
     handleSelectOfferType = (selectedOfferType) => {
-        this.setState({selectedOfferType}, () => console.log(this.state.selectedOfferType.value))
+        this.setState({selectedOfferType})
         this.setState({wasChange: true})
     }
 
     handleSelectPrice = (event) => {
-        this.setState({selectedPrice: parseInt(event.target.value)}, () => console.log(this.state.selectedPrice))
+        this.setState({selectedPrice: parseInt(event.target.value)})
         this.setState({wasChange: true})
     }
 
@@ -56,30 +56,29 @@ export class Home extends React.Component {
     }
 
     handleSelectCity = (event) => {
-        this.setState({selectedCity: event.target.value}, () => console.log(this.state.selectedCity))
+        this.setState({selectedCity: event.target.value})
         this.setState({wasChange: true})
     }
 
     getPathString() {
         let query = ""
         if (this.state.selectedOfferType !== null && this.state.selectedOfferType !== "") {
-            query += "o-" + this.state.selectedOfferType.value + "~"
+            query += "o=" + this.state.selectedOfferType.value + "~"
         }
-        if (this.state.selectedOfferBuilding !== null && this.state.selectedOfferType !== "") {
-            query += "b-" + this.state.selectedOfferBuilding.value + "~"
+        if (this.state.selectedOfferBuilding !== null && this.state.selectedOfferBuilding !== "") {
+            query += "b=" + this.state.selectedOfferBuilding.value + "~"
         }
         if (this.state.selectedPrice !== -1 && this.state.selectedPrice !== null) {
-            query += "p-" + this.state.selectedPrice + "~"
+            query += "p=" + this.state.selectedPrice + "~"
         }
         if (this.state.selectedArea !== -1 && this.state.selectedArea !== null) {
-            query += "a-" + this.state.selectedArea + "~"
+            query += "a=" + this.state.selectedArea + "~"
         }
         if (this.state.selectedCity.length > 0) {
-            query += "c-" + this.state.selectedCity + "~"
+            query += "c=" + this.state.selectedCity + "~"
         }
 
         query = query.substring(0, query.length - 1)
-        console.log(query)
         return (
             query
         )
