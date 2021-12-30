@@ -1,11 +1,10 @@
 import React from "react";
-import {Popover} from "@headlessui/react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import {HouseOfferCard} from "../Components/HouseOfferCard";
 import axios from "axios";
 import data from "../data/path.json";
 import {ApartmentOfferCard} from "../Components/ApartmentOfferCard";
+import {HouseOfferCard} from "../Components/HouseOfferCard";
 
 export class Search extends React.Component {
     constructor(props) {
@@ -37,8 +36,8 @@ export class Search extends React.Component {
             {value: "near_coast", label: "Nad morzem"}
         ],
         market: [
-            {value: "Pierwotny", label: "Pierwotny"},
-            {value: "Wtórny", label: "Wtórny"}
+            {value: "pierwotny", label: "Pierwotny"},
+            {value: "wtorny", label: "Wtórny"}
         ],
         onlyApartments: false,
         onlyEstates: false,
@@ -69,7 +68,6 @@ export class Search extends React.Component {
     }
 
     async componentDidMount() {
-        this.CheckParams();
 
         await this.api.get(data.api.tradeInfos.property.toString()).then(res => {
             this.setState({properties: res.data})
@@ -83,7 +81,6 @@ export class Search extends React.Component {
         await this.api.get(data.api.agents.toString()).then(res => {
             this.setState({agents: res.data})
         })
-
         await this.api.get(data.api.estateStatuses.toString()).then(res => {
             this.setState({estateStatuses: res.data})
         })
@@ -96,9 +93,9 @@ export class Search extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+
         if (this.state.justSearch === true) {
             this.setState({wasSearch: true})
-            this.renderOffers()
             this.setState({justSearch: false})
         }
     }
@@ -108,9 +105,8 @@ export class Search extends React.Component {
 
     CheckParams() {
         let parameter = new URLSearchParams(window.location.search);
-        if (parameter.toString().length > 0) {
-            this.setState({checkParams: true})
-        }
+        return parameter.toString().length > 0;
+
     }
 
     getParameter(parameterName) {
@@ -123,9 +119,6 @@ export class Search extends React.Component {
         if (this.getParameter("o") !== null) {
             query += "offerType-" + this.getParameter("o") + "~"
         }
-        if (this.getParameter("b") !== null) {
-            query += "building-" + this.getParameter("b") + "~"
-        }
         if (this.getParameter("p") !== null) {
             query += "price-" + this.getParameter("p") + "~"
         }
@@ -137,12 +130,10 @@ export class Search extends React.Component {
         }
 
         if (query.length === 0) {
-            query = "empty"
-        } else {
-            query = query.substring(0, query.length - 1);
+            return "empty"
         }
 
-        return query;
+        return query.substring(0, query.length - 1);
     }
 
     //endregion
@@ -379,20 +370,32 @@ export class Search extends React.Component {
         return query;
     }
 
-    //TODO check what's wrong with that
     renderOffers() {
-        if (this.state.checkParams === true && this.state.wasSearch === false) {
-            console.log(this.setFuzzyQuery())
-            return (
-                <div>
+        if (this.CheckParams() && this.state.wasSearch === false) {
+            if (this.getParameter("b") === "d") {
+                return (
                     <div className={"mx-10 mx-auto w-3/4 mt-20"}>
-                        {<HouseOfferCard fuzzyQuery={1} query={this.setFuzzyQuery()}/>}
+                        {<HouseOfferCard query={this.setFuzzyQuery()} fuzzyQuery={true}/>}
                     </div>
+                )
+            } else if (this.getParameter("b") === "m") {
+                return (
                     <div className={"mx-10 mx-auto w-3/4 mt-20\""}>
-                        {<ApartmentOfferCard fuzzyQuery={1} query={this.setFuzzyQuery()}/>}
+                        {<ApartmentOfferCard query={this.setFuzzyQuery()} fuzzyQuery={true}/>}
                     </div>
-                </div>
-            )
+                )
+            } else {
+                return (
+                    <div>
+                        <div className={"mx-10 mx-auto w-3/4 mt-20"}>
+                            {<HouseOfferCard query={this.setFuzzyQuery()} fuzzyQuery={true}/>}
+                        </div>
+                        <div className={"mx-10 mx-auto w-3/4 mt-20\""}>
+                            {<ApartmentOfferCard query={this.setFuzzyQuery()} fuzzyQuery={true}/>}
+                        </div>
+                    </div>
+                )
+            }
         }
 
         if (this.state.wasSearch === false) {
@@ -437,12 +440,95 @@ export class Search extends React.Component {
         }
     }
 
-    moreOptions() {
+
+    render() {
         return (
-            <div
-                className="w-full mt-5 ml-5 rounded-md shadow-lg bg-gray-400 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className={"grid grid-cols-3 gap-10 mx-5"}>
-                    <div className={"w-full grid gap-6 grid-cols-2"}>
+            <div className={"bg-gray-400 md:container md:mx-auto"}>
+                <div className={"h-28 bg-pink-400 w-full flex"}>
+                    <img src={"img/pexels-burst-373893.jpg"} className={"w-full h-full"} alt={"city at night"}/>
+                </div>
+                <div className={"grid grid-cols-3 gap-8 mx-5 mt-5 text-center"}>
+                    <div className={"w-full"}>
+                        <Select
+                            options={this.state.propertyTypesList}
+                            value={this.state.selectedPropertyType}
+                            CloseMenuOnSelect={true}
+                            onChange={this.handleSelectPropertyType}
+                            components={this.animatedComponents}
+                            isClearable
+                            placeholder={"Typ nieruchomości"}/>
+                    </div>
+                    <div className={"w-full"}>
+                        <Select
+                            options={this.state.offerType}
+                            value={this.state.selectedOfferType}
+                            CloseMenuOnSelect={true}
+                            onChange={this.handleSelectOfferType}
+                            components={this.animatedComponents}
+                            placeholder={"Typ oferty"}/>
+                    </div>
+                    <div className={"w-full"}>
+                        <Select
+                            options={this.state.citiesList}
+                            value={this.state.selectedCity}
+                            CloseMenuOnSelect={true}
+                            onChange={this.handleSelectCity}
+                            components={this.animatedComponents}
+                            placeholder={"Miasto"}/>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-3 gap-10 mx-5 mt-5"}>
+                    <div className={"grid grid-cols-2 gap-6 w-full"}>
+                        <div className={"w-full"}>
+                            <Select options={this.state.estateStatusesList}
+                                    closeMenuOnSelect={true}
+                                    components={this.animatedComponents}
+                                    onChange={this.handleSelectStatus}
+                                    isClearable
+                                    placeholder={"Stan"}/>
+                        </div>
+                        <div className={"w-full"}>
+                            <Select
+                                options={this.state.market}
+                                value={this.state.selectedMarket}
+                                CloseMenuOnSelect={true}
+                                onChange={this.handleSelectMarket}
+                                components={this.animatedComponents}
+                                isClearable
+                                placeholder={"Rynek"}/>
+                        </div>
+                    </div>
+                    <div className={"grid grid-cols-2 gap-6 w-full"}>
+                        <div className={"w-full"}>
+                            <input
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id={"areaFrom"} type="text" pattern={"[0-9]*"} placeholder="Powierzchnia od"
+                                onChange={this.handleChangeAreaFrom}/>
+                        </div>
+                        <div className={"w-full"}>
+                            <input
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id={"areaTo"} type="text" pattern={"[0-9]*"} placeholder="Powierzchnia do"
+                                onChange={this.handleChangeAreaTo}/>
+                        </div>
+                    </div>
+                    <div className={"grid grid-cols-2 gap-6 w-full"}>
+                        <div className={"w-full"}>
+                            <input
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id={"priceFrom"} type="text" pattern={"[0-9]*"} placeholder="Cena od"
+                                onChange={this.handleChangePriceFrom}/>
+                        </div>
+                        <div className={"w-full"}>
+                            <input
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id={"priceTo"} type="text" pattern={"[0-9]*"} placeholder="Cena do"
+                                onChange={this.handleChangePriceTo}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={"grid grid-cols-3 gap-10 mx-5 mt-5"}>
+                    <div className={"grid grid-cols-2 gap-6 w-full"}>
                         <div className={"w-full"}>
                             <input
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -456,7 +542,7 @@ export class Search extends React.Component {
                                 onChange={this.handleChangePriceForMeterTo}/>
                         </div>
                     </div>
-                    <div className={"w-full grid gap-6 grid-cols-2"}>
+                    <div className={"grid grid-cols-2 gap-6 w-full"}>
                         <div className={"w-full"}>
                             <input
                                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -470,20 +556,18 @@ export class Search extends React.Component {
                                 onChange={this.handleChangeNumberOfRoomsTo}/>
                         </div>
                     </div>
-                    <div>
-                        <div className={"w-full grid gap-6 grid-cols-2"}>
-                            <div className={"w-full"}>
-                                <input
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id={"numberOfFloorsFrom"} type="text" pattern={"[0-9]*"}
-                                    placeholder="Liczba pięter od" onChange={this.handleChangeNumberOfFloorsFrom}/>
-                            </div>
-                            <div className={"w-full"}>
-                                <input
-                                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id={"numberOfFloorsTo"} type="text" pattern={"[0-9]*"}
-                                    placeholder="Liczba pięter do" onChange={this.handleChangeNumberOfFloorsTo}/>
-                            </div>
+                    <div className={"grid grid-cols-2 gap-6 w-full"}>
+                        <div className={"w-full"}>
+                            <input
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id={"numberOfFloorsFrom"} type="text" pattern={"[0-9]*"}
+                                placeholder="Liczba pięter od" onChange={this.handleChangeNumberOfFloorsFrom}/>
+                        </div>
+                        <div className={"w-full"}>
+                            <input
+                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                id={"numberOfFloorsTo"} type="text" pattern={"[0-9]*"}
+                                placeholder="Liczba pięter do" onChange={this.handleChangeNumberOfFloorsTo}/>
                         </div>
                     </div>
                 </div>
@@ -514,101 +598,8 @@ export class Search extends React.Component {
                                     closeMenuOnSelect={true}
                                     components={this.animatedComponents}
                                     onChange={this.handleSelectStatus}
+                                    isClearable
                                     placeholder={"Stan"}/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-
-    render() {
-        return (
-            <div className={"bg-gray-400 md:container md:mx-auto"}>
-                <div className={"h-28 bg-pink-400 w-full flex"}>
-                    <img src={"img/pexels-burst-373893.jpg"} className={"w-full h-full"} alt={"city at night"}/>
-                </div>
-                <div className={"grid grid-cols-3 gap-8 mx-5 mt-5 text-center"}>
-                    <div className={"w-full"}>
-                        <Select
-                            options={this.state.propertyTypesList}
-                            value={this.state.selectedPropertyType}
-                            CloseMenuOnSelect={true}
-                            onChange={this.handleSelectPropertyType}
-                            components={this.animatedComponents}
-                            placeholder={"Typ nieruchomości"}/>
-                    </div>
-                    <div className={"w-full"}>
-                        <Select
-                            options={this.state.offerType}
-                            value={this.state.selectedOfferType}
-                            CloseMenuOnSelect={true}
-                            onChange={this.handleSelectOfferType}
-                            components={this.animatedComponents}
-                            placeholder={"Typ oferty"}/>
-                    </div>
-                    <div className={"w-full"}>
-                        <Select
-                            options={this.state.citiesList}
-                            value={this.state.selectedCity}
-                            CloseMenuOnSelect={true}
-                            onChange={this.handleSelectCity}
-                            components={this.animatedComponents}
-                            placeholder={"Miasto"}/>
-                    </div>
-                </div>
-                <div className={"grid grid-cols-3 gap-10 mx-5 mt-5"}>
-                    <div className={"grid grid-cols-2 gap-6 w-full"}>
-                        <div className={"w-full"}>
-                            <Popover>
-                                <Popover.Button as={"button"}
-                                                className={"flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-white bg-gray-200 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"}>
-                                    <span>Więcej opcji</span>
-
-                                </Popover.Button>
-                                <Popover.Panel className={"w-screen bg-transparent -ml-10"}>
-                                    <div className={"container"}>
-                                        {this.moreOptions()}
-                                    </div>
-                                </Popover.Panel>
-                            </Popover>
-                        </div>
-                        <div className={"w-full"}>
-                            <Select
-                                options={this.state.market}
-                                value={this.state.selectedMarket}
-                                CloseMenuOnSelect={true}
-                                onChange={this.handleSelectMarket}
-                                components={this.animatedComponents}
-                                placeholder={"Rynek"}/>
-                        </div>
-                    </div>
-                    <div className={"grid grid-cols-2 gap-6 w-full"}>
-                        <div className={"w-full"}>
-                            <input
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id={"areaFrom"} type="text" pattern={"[0-9]*"} placeholder="Powierzchnia od"
-                                onChange={this.handleChangeAreaFrom}/>
-                        </div>
-                        <div className={"w-full"}>
-                            <input
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id={"areaTo"} type="text" pattern={"[0-9]*"} placeholder="Powierzchnia do"
-                                onChange={this.handleChangeAreaTo}/>
-                        </div>
-                    </div>
-                    <div className={"grid grid-cols-2 gap-6 w-full"}>
-                        <div className={"w-full"}>
-                            <input
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id={"priceFrom"} type="text" pattern={"[0-9]*"} placeholder="Cena od"
-                                onChange={this.handleChangePriceFrom}/>
-                        </div>
-                        <div className={"w-full"}>
-                            <input
-                                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id={"priceTo"} type="text" pattern={"[0-9]*"} placeholder="Cena do"
-                                onChange={this.handleChangePriceTo}/>
                         </div>
                     </div>
                 </div>

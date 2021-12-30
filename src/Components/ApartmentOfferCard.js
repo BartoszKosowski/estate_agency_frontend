@@ -9,15 +9,22 @@ export class ApartmentOfferCard extends React.Component {
     }
 
     async componentDidMount() {
-        if (this.props.query === "") {
-            await this.api.get(data.api.apartmentOfferPreviews.toString()).then(res => {
+        if (this.props.fuzzyQuery === true) {
+            await this.api.get(data.api.apartmentOfferPreviews.toString() + "/fuzzy/" + this.props.query).then(res => {
                 this.setState({offers: res.data})
             })
         } else {
-            await this.api.get(data.api.apartmentOfferPreviews.toString() + "/" + this.props.query).then(res => {
-                this.setState({offers: res.data})
-            })
+            if (this.props.query === "") {
+                await this.api.get(data.api.apartmentOfferPreviews.toString()).then(res => {
+                    this.setState({offers: res.data})
+                })
+            } else {
+                await this.api.get(data.api.apartmentOfferPreviews.toString() + "/" + this.props.query).then(res => {
+                    this.setState({offers: res.data})
+                })
+            }
         }
+
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {

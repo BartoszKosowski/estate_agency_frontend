@@ -10,12 +10,12 @@ export class Home extends React.Component {
 
     state = {
         offerBuilding: [
-            {value: "estate", label: "Domy"},
-            {value: "apartment", label: "Mieszkania"}
+            {value: "d", label: "Domy"},
+            {value: "m", label: "Mieszkania"}
         ],
         offerType: [
-            {value: "buy", label: "Sprzedaż"},
-            {value: "rent", label: "Wynajem"},
+            {value: "sprzedaz", label: "Sprzedaż"},
+            {value: "wynajem", label: "Wynajem"},
         ],
         selectedOfferBuilding: "",
         selectedOfferType: "",
@@ -63,19 +63,19 @@ export class Home extends React.Component {
     getPathString() {
         let query = ""
         if (this.state.selectedOfferType !== null && this.state.selectedOfferType !== "") {
-            query += "o=" + this.state.selectedOfferType.value + "~"
+            query += "o=" + this.state.selectedOfferType.value + "&"
         }
         if (this.state.selectedOfferBuilding !== null && this.state.selectedOfferBuilding !== "") {
-            query += "b=" + this.state.selectedOfferBuilding.value + "~"
+            query += "b=" + this.state.selectedOfferBuilding.value + "&"
         }
         if (this.state.selectedPrice !== -1 && this.state.selectedPrice !== null) {
-            query += "p=" + this.state.selectedPrice + "~"
+            query += "p=" + this.state.selectedPrice + "&"
         }
         if (this.state.selectedArea !== -1 && this.state.selectedArea !== null) {
-            query += "a=" + this.state.selectedArea + "~"
+            query += "a=" + this.state.selectedArea + "&"
         }
         if (this.state.selectedCity.length > 0) {
-            query += "c=" + this.state.selectedCity + "~"
+            query += "c=" + this.state.selectedCity + "&"
         }
 
         query = query.substring(0, query.length - 1)

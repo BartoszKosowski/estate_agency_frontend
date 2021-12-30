@@ -9,11 +9,12 @@ export class HouseOfferCard extends React.Component {
     }
 
     async componentDidMount() {
-        if (this.props.fuzzyQuery === 1) {
-            console.log("AAAA")
+        if (this.props.fuzzyQuery === true) {
+            await this.api.get(data.api.estateOfferPreviews.toString() + "/fuzzy/" + this.props.query).then(res => {
+                this.setState({offers: res.data})
+            })
         } else {
             if (this.props.query === "") {
-                console.log("Dziala")
                 await this.api.get(data.api.estateOfferPreviews.toString()).then(res => {
                     this.setState({offers: res.data})
                 })
