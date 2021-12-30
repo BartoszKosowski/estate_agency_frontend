@@ -4,9 +4,6 @@ import Dropdown from "./Dropdown";
 
 export default function Navigation() {
     const [menuOpen, setMenuOpen] = React.useState(false);
-    const cities = [{value: "Kraków", key: "Cracow"},
-        {value: "Katowice", key: "Katowice"},
-        {value: "Tychy",key: "Tychy"}];
     const services = [{value: "Zakup nieruchomości", key: "buy-estate"},
         {value: "Sprzedaż nieruchomości", key: "sell-estate"},
         {value: "Doradztwo", key: "advisement"},
@@ -52,9 +49,6 @@ export default function Navigation() {
                                         >
                                             Wyszukaj
                                         </a>
-                                    </li>
-                                    <li>
-                                        <Dropdown items={cities} name={"Nieruchomości"}/>
                                     </li>
                                     <li>
                                         <Dropdown items={services} name={"Usługi"}/>
