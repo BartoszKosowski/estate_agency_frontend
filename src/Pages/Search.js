@@ -1,6 +1,5 @@
 import React from "react";
 import {Popover} from "@headlessui/react";
-import {FiChevronDown} from "react-icons/all";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import {HouseOfferCard} from "../Components/HouseOfferCard";
@@ -382,7 +381,7 @@ export class Search extends React.Component {
 
     //TODO check what's wrong with that
     renderOffers() {
-        if (this.state.checkParams === true) {
+        if (this.state.checkParams === true && this.state.wasSearch === false) {
             console.log(this.setFuzzyQuery())
             return (
                 <div>
@@ -412,10 +411,12 @@ export class Search extends React.Component {
             return (
                 <div>
                     <div className={"mx-10 mx-auto w-3/4 mt-20"}>
-                        {<HouseOfferCard query={this.createQueryString().toString()}/>}
+                        {<HouseOfferCard query={this.createQueryString().toString()}
+                                         justSearch={this.state.justSearch}/>}
                     </div>
                     <div className={"mx-10 mx-auto w-3/4 mt-20\""}>
-                        {<ApartmentOfferCard query={this.createQueryString().toString()}/>}
+                        {<ApartmentOfferCard query={this.createQueryString().toString()}
+                                             justSearch={this.state.justSearch}/>}
                     </div>
                 </div>
             )
@@ -423,14 +424,14 @@ export class Search extends React.Component {
         if (this.state.onlyEstates === true && this.state.onlyApartments === false) {
             return (
                 <div className={"mx-10 mx-auto w-3/4 mt-20"}>
-                    {<HouseOfferCard query={this.createQueryString()}/>}
+                    {<HouseOfferCard query={this.createQueryString()} justSearch={this.state.justSearch}/>}
                 </div>
             )
         }
         if (this.state.onlyEstates === false && this.state.onlyApartments === true) {
             return (
                 <div className={"mx-10 mx-auto w-3/4 mt-20\""}>
-                    {<ApartmentOfferCard query={this.createQueryString()}/>}
+                    {<ApartmentOfferCard query={this.createQueryString()} justSearch={this.state.justSearch}/>}
                 </div>
             )
         }

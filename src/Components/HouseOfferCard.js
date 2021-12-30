@@ -26,9 +26,11 @@ export class HouseOfferCard extends React.Component {
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
-        await this.api.get(data.api.estateOfferPreviews.toString() + "/" + this.props.query).then(res => {
-            this.setState({offers: res.data})
-        })
+        if (this.props.justSearch === true) {
+            await this.api.get(data.api.estateOfferPreviews.toString() + "/" + this.props.query).then(res => {
+                this.setState({offers: res.data})
+            })
+        }
     }
 
     api = axios.create({
