@@ -3,7 +3,7 @@ import React from "react";
 export class BuyEstate extends React.Component {
     render() {
         return (
-            <div className={"bg-gray-400 md:container md:mx-auto"}>
+            <div className={"bg-gray-400 container md:mx-auto"}>
                 <div className={"text-lg container mx-auto"}>
                     <img className={"w-full h-80"} src={"img/pexels-quark-studio-2506990.jpg"}
                          alt={"exclusive apartment"}/>

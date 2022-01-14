@@ -86,12 +86,12 @@ export class Home extends React.Component {
 
     render() {
         return (
-            <div className={"text-lg container bg-gray-400 mx-auto"}>
+            <div className={"text-lg bg-gray-400 mx-auto"}>
                 <div className={"grid place-items-center text-3xl font-semibold text-white uppercase"}>
                     Wypróbuj naszą nową wyszukiwarkę!
                 </div>
-                <div className={" mx-5 grid grid-cols-6 gap-4 w-full"}>
-                    <div className={"grid"}>
+                <div className={"grid grid-cols-6 gap-4 static w-full"}>
+                    <div className={"grid mx-5"}>
                         <Select options={this.state.offerType}
                                 value={this.state.selectedOfferType}
                                 closeMenuOnSelect={false}

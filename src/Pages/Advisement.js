@@ -4,7 +4,7 @@ import React from "react";
 export class Advisement extends React.Component {
     render() {
         return (
-            <div className={"bg-gray-400 md:container md:mx-auto"}>
+            <div className={"bg-gray-400 md:mx-auto"}>
                 <div className={"w-full"}>
                     <img className={"w-full h-80 object-cover"} src={"img/pexels-kampus-production-8439697.jpg"}
                          alt={"architectonic project"}/>

@@ -10,18 +10,18 @@ export default function Navigation() {
         {value: "Projektowanie wnętrz", key: "inside-design"}]
 
     return (
-            <div className="flex flex-wrap h-16 -mb-1">
-                <div className="w-full fixed">
-                    <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-700">
-                        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
-                            <div
-                                className="w-full relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start">
-                                <a className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
-                                    href="/">
-                                    Some estates
-                                </a>
-                                <button
-                                    className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+        <div className="static h-16 w-screen -mb-1">
+            <div className="fixed z-50 w-full">
+                <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-gray-700">
+                    <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+                        <div
+                            className="w-full relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start">
+                            <a className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
+                               href="/">
+                                Some estates
+                            </a>
+                            <button
+                                className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
                                     type="button"
                                     onClick={() => setMenuOpen(!menuOpen)}>
                                 </button>

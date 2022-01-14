@@ -10,7 +10,8 @@ export class ContactUs extends React.Component {
 
     state = {
         services: [],
-        charactersLeft: 5000
+        charactersLeft: 5000,
+        description: ""
     }
 
     componentDidMount() {
@@ -47,16 +48,25 @@ export class ContactUs extends React.Component {
         )
     }
 
-    //TODO improve that function
-    textCounter(maxLength){
-        if (maxLength > 0){
+    textCounter(maxLength) {
+        if (maxLength > 0) {
             this.setState({charactersLeft: (this.state.charactersLeft - 1)})
         }
     }
 
+    handleDescriptionChange = (event) => {
+        this.setState({description: event.target.value})
+        if (this.state.description === "") {
+            this.setState({charactersLeft: 5000})
+        } else {
+            this.setState({charactersLeft: 5000 - this.state.description.toString().length})
+        }
+
+    }
+
 
     render() {
-        return(
+        return (
             <div className={"md:container bg-gray-400 md:mx-auto grid grid-cols-2 h-screen"}>
                 <div className={"bg-pink-400"}>
                     {/*{TODO add some photo and text}*/}
@@ -90,9 +100,11 @@ export class ContactUs extends React.Component {
                        <div className={"w-11/12 mx-auto flex flex-wrap mb-6"}>
                            {this.formatLabel("Dodatkowa wiadomość")}
                            <div className={"w-full mx-auto flex flex-wrap"}>
-                               <input className={"bg-gray-400"} disabled maxLength="21" size="21" value={"Pozostało " + this.state.charactersLeft + " znaków"} id="counter"/>
-                               <textarea className={"w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"}
-                                         onKeyUp={() => this.textCounter(5000)} id={"description"} maxLength={5000}/>
+                               <input className={"bg-gray-400"} disabled maxLength="21" size="21"
+                                      value={"Pozostało " + this.state.charactersLeft + " znaków"} id="counter"/>
+                               <textarea
+                                   className={"w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"}
+                                   onChange={this.handleDescriptionChange} id={"description"} maxLength={5000}/>
                            </div>
                        </div>
                    </form>

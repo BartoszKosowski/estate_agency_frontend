@@ -6,7 +6,7 @@ export class Contact extends React.Component {
 
     render() {
         return (
-            <div className={"bg-gray-400 md:container md:mx-auto"}>
+            <div className={"bg-gray-400 md:mx-auto"}>
                 <div className={"text-lg h-screen grid grid-cols-2 mx-auto"}>
                     <div className={"w-2/3 mx-auto text-lg mt-10 border-r-2 mb-10"}>
                         <div className={"text-2xl text-white font-semibold uppercase mb-3"}>
@@ -39,7 +39,7 @@ export class Contact extends React.Component {
                                 <div className={"mx-auto flex uppercase font-semibold"}>Poniedziałek:
                                 <br/>
                                     Wtorek:
-                                <br/>
+                                    <br/>
                                     Środa:
                                     <br/>
                                     Czwartek:

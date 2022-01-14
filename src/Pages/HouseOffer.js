@@ -104,12 +104,13 @@ export class HouseOffer extends React.Component {
 
     }
 
+
     render() {
         return (
 
             <div className={"md:container mx-auto bg-gray-400"}>
                 <div className={"flex grid grid-cols-2 text-white border-b-2 border-white"}>
-                    <div>{<PhotoGallery/>}</div>
+                    <div className>{<PhotoGallery/>}</div>
                     <div>{<OfferAgent agentNumber={this.getParameter("a")}/>}</div>
                 </div>
                 <div className={"flex grid grid-cols-5 gap-4 text-white border-b-2 border-white"}>
