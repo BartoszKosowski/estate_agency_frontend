@@ -116,6 +116,9 @@ export class Search extends React.Component {
 
     setFuzzyQuery() {
         let query = "";
+        if (this.getParameter("c") !== null) {
+            query += "city-" + this.getParameter("c") + "~"
+        }
         if (this.getParameter("o") !== null) {
             query += "offerType-" + this.getParameter("o") + "~"
         }
@@ -124,9 +127,6 @@ export class Search extends React.Component {
         }
         if (this.getParameter("a") !== null) {
             query += "area-" + this.getParameter("a") + "~"
-        }
-        if (this.getParameter("c") !== null) {
-            query += "city-" + this.getParameter("c") + "~"
         }
 
         if (query.length === 0) {

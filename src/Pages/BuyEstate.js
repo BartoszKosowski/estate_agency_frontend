@@ -23,11 +23,8 @@ export class BuyEstate extends React.Component {
                             </span>
                         </div>
                         <div className={"h-1/2 mx-auto"}>
-
-                            {/*TODO CENTER THAT F*****' DIVS AND BUTTONS !!!*/}
-
                             <button
-                                className={"w-1/2 h-full bg-purple-700 hover:bg-purple-500 font-semibold uppercase content-center inline-block"}>
+                                className={"w-1/2 h-full bg-blue-900 hover:bg-blue-700 font-semibold uppercase content-center inline-block"}>
                                 sprawdź nasze oferty sprzedaży nieruchomości
                             </button>
                         </div>
@@ -50,7 +47,7 @@ export class BuyEstate extends React.Component {
                         </div>
                         <div className={"h-1/2 m-auto"}>
                             <button
-                                className={"w-1/2 m-auto h-full bg-purple-700 hover:bg-purple-500 font-semibold justify-end uppercase ml-5 flex-1"}>
+                                className={"w-1/2 m-auto h-full bg-blue-900 hover:bg-blue-700 font-semibold justify-end uppercase ml-5 flex-1"}>
                                 sprawdź nasze oferty Wynajmu nieruchomości
                             </button>
                         </div>

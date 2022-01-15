@@ -23,7 +23,7 @@ export class InsideDesign extends React.Component {
                     </div>
                     <a href={"/contact-us"}>
                         <button
-                            className={"w-2/3 h-40 mt-20 text-2xl flex text-center m-auto uppercase font-semibold text-white bg-purple-700 hover:bg-purple-500"}>
+                            className={"w-2/3 h-40 mt-20 text-2xl flex text-center m-auto uppercase font-semibold text-white bg-blue-900 hover:bg-blue-700"}>
                             <span className={"m-auto"}>
                                 Umów się na spotkanie już dzisiaj!
                             </span>

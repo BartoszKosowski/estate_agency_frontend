@@ -68,8 +68,8 @@ export class ContactUs extends React.Component {
     render() {
         return (
             <div className={"md:container bg-gray-400 md:mx-auto grid grid-cols-2 h-screen"}>
-                <div className={"bg-pink-400"}>
-                    {/*{TODO add some photo and text}*/}
+                <div className>
+                    <img src={"img/pexels-rodnae-productions-8297642.jpg"} className={"object-fill"} alt={"mailbox"}/>
                 </div>
                 <div>
                     <form className={"w-full"}>
@@ -78,8 +78,8 @@ export class ContactUs extends React.Component {
                                 {this.formatLabel("Imię")}
                                 {this.correctFillInput("nameInput", "Jan")}
                             </div>
-                           <div className="w-10/12 mx-auto md:w-5/12 px-3">
-                               {this.formatLabel("Nazwisko")}
+                            <div className="w-10/12 mx-auto md:w-5/12 px-3">
+                                {this.formatLabel("Nazwisko")}
                                {this.correctFillInput("lastNameInput", "Kowalski")}
                            </div>
                        </div>
@@ -107,10 +107,9 @@ export class ContactUs extends React.Component {
                                    onChange={this.handleDescriptionChange} id={"description"} maxLength={5000}/>
                            </div>
                        </div>
-                   </form>
-                    {/*TODO improve button*/}
-                    <div className={"w-11/12 -mb-10 flex items-end"}>
-                        <button className={"w-1/3 h-20 bg-pink-400"}>
+                    </form>
+                    <div className={"w-11/12 -mb-10 ml-7 flex items-end"}>
+                        <button className={"w-1/3 h-20 bg-blue-800 hover:bg-blue-600 text-white"}>
                             Wyślij
                         </button>
                     </div>
