@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import data from "../data/path.json"
+import data from "../resources/data/path.json"
 
 
 export class AgentProfile extends React.Component {

@@ -16,8 +16,6 @@ export class BuyEstate extends React.Component {
                             <span className={"uppercase text-3xl mb-3 mr-5"}>Chcesz kupić mieszkanie wprost stworzone dla Ciebie?</span>
                             <br/>
 
-                            {/*TODO extend descriptions*/}
-
                             <span className={"mr-20"}>
                             Posiadamy w naszej ofercie szeroki wachlarz mieszkań, domów i innych nieruchomości na sprzedaż. Nie czekaj tylko sprawdź naszą ofertę
                             </span>

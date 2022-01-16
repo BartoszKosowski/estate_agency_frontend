@@ -14,7 +14,6 @@ export class InsideDesign extends React.Component {
                             nie masz pomysłu jak się urządzić?
                         </span>
                         <br/>
-                        {/*TODO fix description*/}
                         Nasi projektanci od lat specjalizują się w tworzeniu uniklanych wnętrz, nadadzą twojemu
                         mieszkaniu niesamowity, dostosowany
                         do Ciebie styl. Lubisz klasycyzm lub późne rokoko? A może preferujesz nowoczesne wnętrza?

@@ -2,7 +2,7 @@ import React from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import axios from "axios";
-import data from "../data/path.json";
+import data from "../resources/data/path.json";
 import {ApartmentOfferCard} from "../Components/ApartmentOfferCard";
 import {HouseOfferCard} from "../Components/HouseOfferCard";
 
@@ -26,14 +26,14 @@ export class Search extends React.Component {
         floorsTo: "",
         justSearch: false,
         location: [
-            {value: "near_forest", label: "Niedaleko lasu"},
-            {value: "near_river", label: "Niedaleko rzeki"},
-            {value: "near_mountains", label: "W górach"},
-            {value: "near_center", label: "W centrum"},
-            {value: "near_highway", label: "Blisko wjazdu na autostradę"},
-            {value: "near_mall", label: "Niedaleko centrum handlowego"},
-            {value: "near_lake", label: "Niedaleko jeziora"},
-            {value: "near_coast", label: "Nad morzem"}
+            {value: "distForest", label: "Niedaleko lasu"},
+            {value: "distRiver", label: "Niedaleko rzeki"},
+            {value: "distMountains", label: "W górach"},
+            {value: "distCenter", label: "W centrum"},
+            {value: "distHighway", label: "Blisko wjazdu na autostradę"},
+            {value: "distMall", label: "Niedaleko centrum handlowego"},
+            {value: "distLake", label: "Niedaleko jeziora"},
+            {value: "distCoast", label: "Nad morzem"}
         ],
         market: [
             {value: "pierwotny", label: "Pierwotny"},
@@ -69,7 +69,7 @@ export class Search extends React.Component {
 
     async componentDidMount() {
 
-        await this.api.get(data.api.tradeInfos.property.toString()).then(res => {
+        await axios.get("https://localhost:5001/api/tradeInfoes/domain/property").then(res => {
             this.setState({properties: res.data})
         })
         await this.api.get(data.api.tradeInfos.market.toString()).then(res => {
@@ -157,7 +157,7 @@ export class Search extends React.Component {
     getPropertyTypes = () => {
         return (
             this.state.properties.map(p =>
-                this.state.propertyTypesList.push({value: p, label: p})
+                this.state.propertyTypesList.push({value: p.Name, label: p.Name})
             )
         )
     }
@@ -166,6 +166,8 @@ export class Search extends React.Component {
         this.state.agents.map(a =>
             this.state.agentsList.push({value: a.IdAgents, label: a.FullName})
         )
+
+        console.log(this.state.agentsList);
     }
 
     getEstateStatusesList = () => {
@@ -219,15 +221,15 @@ export class Search extends React.Component {
 
     handleSearch = () => {
         this.setState({justSearch: true})
-        if (this.state.selectedPropertyType === "Mieszkanie") {
-            this.setState({onlyApartments: true})
-        }
-
-        if (this.state.selectedPropertyType.length > 0 && this.state.selectedPropertyType !== "Mieszkanie") {
-            this.setState({onlyEstates: true})
-        }
-
-        if (this.state.onlyApartments === false && this.state.onlyEstates === false) {
+        if (this.state.selectedPropertyType !== null && this.state.selectedPropertyType !== "") {
+            if (this.state.selectedPropertyType.value === "Mieszkanie") {
+                this.setState({onlyApartments: true})
+                this.setState({onlyEstates: false})
+            } else {
+                this.setState({onlyEstates: true})
+                this.setState({onlyApartments: false})
+            }
+        } else {
             this.setState({onlyApartments: true})
             this.setState({onlyEstates: true})
         }
@@ -237,7 +239,7 @@ export class Search extends React.Component {
 
 
     handleSelectAgents = (selectedAgents) => {
-        this.setState({selectedAgents})
+        this.setState({selectedAgents}, () => console.log(this.state.selectedAgents))
     }
 
     handleSelectLocations = (selectedLocations) => {
@@ -283,26 +285,26 @@ export class Search extends React.Component {
 
     createQueryString = () => {
         let query = "";
-        if (this.state.selectedPropertyType !== "") {
+        if (this.state.selectedPropertyType !== "" && this.state.selectedPropertyType !== null) {
             query += ("propertyType-" + encodeURIComponent(this.state.selectedPropertyType.value) + "~");
         }
-        if (this.state.selectedOfferType !== "") {
+        if (this.state.selectedOfferType !== "" && this.state.selectedOfferType !== null) {
             query += ("offerType-" + encodeURIComponent(this.state.selectedOfferType.value) + "~");
         }
 
-        if (this.state.selectedCity !== "") {
+        if (this.state.selectedCity !== "" && this.state.selectedCity !== null) {
             query += ("city-" + encodeURIComponent(this.state.selectedCity.value) + "~");
         }
 
-        if (this.state.selectedMarket !== "") {
+        if (this.state.selectedMarket !== "" && this.state.selectedMarket !== null) {
             query += ("market-" + encodeURIComponent(this.state.selectedMarket.value) + "~");
         }
 
-        if (this.state.areaFrom !== "") {
+        if (this.state.areaFrom !== "" && !isNaN(parseInt(this.state.areaFrom))) {
             query += ("areaFrom-" + this.state.areaFrom + "~");
         }
 
-        if (this.state.areaTo !== "") {
+        if (this.state.areaTo !== "" && !isNaN(parseInt(this.state.areaTo))) {
             query += ("areaTo-" + this.state.areaTo + "~");
         }
 
@@ -341,24 +343,19 @@ export class Search extends React.Component {
         if (this.state.selectedAgents.length > 0) {
             query += ("agents-")
             this.state.selectedAgents.map(agent => {
-                return query += encodeURIComponent("_" + agent.IdAgent)
+                return query += encodeURIComponent("_" + agent.value)
             })
             query += ("~")
         }
 
-        if (this.state.selectedStatus !== "") {
+        if (this.state.selectedStatus !== "" && this.state.selectedStatus !== null) {
             query += ("state-" + this.state.selectedStatus.value + "~");
         }
 
-        //TODO check if that works correctly
         if (this.state.selectedLocations.length > 0) {
             this.state.selectedLocations.map(location => {
-                return query += encodeURIComponent(this.state.selectedLocations.value + "~")
+                return query += encodeURIComponent(location.value + "~")
             })
-        }
-
-        if (this.state.selectedFacilities.length > 0) {
-            //TODO add facilities
         }
 
         if (query.length === 0) {

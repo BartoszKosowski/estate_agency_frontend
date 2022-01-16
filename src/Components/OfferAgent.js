@@ -1,5 +1,5 @@
 import React from "react";
-import data from "../data/path.json";
+import data from "../resources/data/path.json";
 import {BiPhone, HiOutlineMail} from "react-icons/all";
 import axios from "axios";
 

@@ -8,13 +8,11 @@ export class Advisement extends React.Component {
                 <div className={"w-full"}>
                     <img className={"w-full h-80 object-cover"} src={"img/pexels-kampus-production-8439697.jpg"}
                          alt={"architectonic project"}/>
-                    {/*TODO improve page description*/}
                     <div className={"mt-20 h-60 w-full text-white text-xl  bg-gray-500"}>
                         <span className={"text-3xl font-semibold uppercase mb-5"}>
                             Nie jesteś pewien czego szukasz?
                         </span>
                         <br/>
-                        {/*TODO fix description*/}
                         Nasi agenci to pasjonaci, posiadaja obszerną wiedzę z dziedziny nieruchomości. Konultując się z
                         nami masz pewność, że znajdziesz mieszkanie
                         o jakim zawsze marzyłeś.

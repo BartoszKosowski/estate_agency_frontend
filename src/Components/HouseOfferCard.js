@@ -1,5 +1,5 @@
 import axios from "axios";
-import data from "../data/path.json";
+import data from "../resources/data/path.json";
 import React from "react";
 import {Link} from "react-router-dom";
 

@@ -19,9 +19,6 @@ export const Footer = () => {
                         </div>
                         <div className="flex flex-col">
                             <span className="font-bold text-white uppercase mb-2">Skontaktuj się z nami:</span>
-
-                            {/*TODO add mail sending and calling feature*/}
-
                             <span className="my-2 text-base"><HiOutlineMail size={30} className={"float-left mr-3 -mt-1"}/>office@someestate.com</span>
                             <span className="my-2 text-base"><BsFillTelephoneFill size={30} className={"float-left mr-3 -mt-1"}/>+48 501 253 466</span>
                             <span className="my-2 text-base"><FaSearchLocation size={30} className={"float-left mr-3 mt-1"}/>44-100 Gliwice <br/> Kujawska 2</span>

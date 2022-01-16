@@ -21,11 +21,11 @@ import {
     MdOutlineZoomOutMap,
     SiBookmeter
 } from "react-icons/all";
-import description from "../data/description.json";
+import description from "../resources/data/description.json";
 import {OfferAgent} from "../Components/OfferAgent";
 import {PhotoGallery} from "../Components/PhotoGallery";
 import axios from "axios";
-import data from "../data/path.json";
+import data from "../resources/data/path.json";
 
 
 export class ApartmentOffer extends React.Component {
@@ -113,7 +113,6 @@ export class ApartmentOffer extends React.Component {
         return eqi;
     }
 
-    //TODO naprawić wyświetlanie w liniach
     render() {
         return (
             <div className={"md:container mx-auto bg-gray-400"}>

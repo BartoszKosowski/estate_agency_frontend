@@ -1,5 +1,5 @@
 import React from "react";
-import description from "../data/description.json";
+import description from "../resources/data/description.json";
 import {
     AiFillBook,
     AiFillFire,
@@ -26,7 +26,7 @@ import {OfferAgent} from "../Components/OfferAgent";
 import "react-responsive-carousel/lib/styles/carousel.min.css"
 import {PhotoGallery} from "../Components/PhotoGallery";
 import axios from "axios";
-import data from "../data/path.json";
+import data from "../resources/data/path.json";
 
 export class HouseOffer extends React.Component {
     state = {

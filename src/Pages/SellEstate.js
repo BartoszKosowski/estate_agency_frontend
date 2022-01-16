@@ -14,7 +14,6 @@ export class SellEstate extends React.Component{
                             chcesz sprzedać lub wynająć swoją nieruchomość?
                         </span>
                         <br/>
-                        {/*TODO fix description*/}
                         Korzystając z naszych usług, agenci zajmą się wszystkim za Ciebie! Wystarczy tylko, że spotkasz
                         się z jednym z nas aby
                         ustalić warunki tranzakcji.

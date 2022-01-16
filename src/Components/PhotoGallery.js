@@ -5,7 +5,6 @@ export class PhotoGallery extends React.Component {
 
     render() {
         return (
-            //TODO add photos fetching
             <div className={"relative"}>
                 <div>
                     <Carousel showArrows={true} infiniteLoop useKeyboardArrows autoPlay>

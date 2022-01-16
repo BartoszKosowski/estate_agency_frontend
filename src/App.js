@@ -5,7 +5,6 @@ import {Footer} from "./Components/Footer";
 function App() {
   return (
       <div>
-        {/*  TODO create app responsive*/}
         <Navigation/>
         <NavRoute/>
           <Footer/>
